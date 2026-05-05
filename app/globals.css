@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.mundial-gradient {
+  background: linear-gradient(135deg, #1E7D3B 0%, #FFD700 100%);
+}
+
+.mundial-card {
+  @apply bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-mundial-green/20;
+}
+
+.mundial-btn {
+  @apply bg-mundial-green text-white font-bold py-2 px-6 rounded-full hover:bg-opacity-90 transition-all duration-300;
+}
+
+.mundial-btn-gold {
+  @apply bg-mundial-gold text-mundial-dark font-bold py-2 px-6 rounded-full hover:bg-opacity-90 transition-all duration-300;
+}
