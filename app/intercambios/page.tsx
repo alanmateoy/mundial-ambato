@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
-import type { Session } from '@supabase/supabase-js'
 
 interface Intercambio {
   id: number
@@ -13,8 +12,8 @@ interface Intercambio {
   ubicacion: string
   notas: string
   perfiles: { nombre: string; whatsapp: string }
-  cromo_ofrecido: { numero_cromo: number; jugadores: { nombre: string; apellido: string } }
-  cromo_buscado: { numero_cromo: number; jugadores: { nombre: string; apellido: string } }
+  cromo_ofrecido: { numero_cromo: number; jugadores: { nombre: string; apellido: string } | null }
+  cromo_buscado: { numero_cromo: number; jugadores: { nombre: string; apellido: string } | null }
 }
 
 export default function IntercambiosPage() {
@@ -26,17 +25,24 @@ export default function IntercambiosPage() {
   const [cromoBuscado, setCromoBuscado] = useState('')
   const [ubicacion, setUbicacion] = useState('Ambato')
   const [notas, setNotas] = useState('')
-  const [loadingIntercambios, setLoadingIntercambios] = useState(true)
+  const [loadingInter, setLoadingInter] = useState(true)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   useEffect(() => {
     checkUser()
   }, [])
 
   const checkUser = async () => {
-    if (!supabase) return
+    if (!supabase) {
+      setLoadingInter(false)
+      return
+    }
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { window.location.href = '/login'; return }
+    if (!user) {
+      window.location.href = '/login'
+      return
+    }
     setUser(user)
     loadMisCromos(user.id)
     loadIntercambios()
@@ -54,10 +60,10 @@ export default function IntercambiosPage() {
 
   const loadIntercambios = async () => {
     if (!supabase) {
-      setLoadingIntercambios(false)
+      setLoadingInter(false)
       return
     }
-    setLoadingIntercambios(true)
+    setLoadingInter(true)
     setError('')
     const { data, error: err } = await supabase
       .from('intercambios')
@@ -72,22 +78,21 @@ export default function IntercambiosPage() {
 
     if (err) {
       setError('Error cargando intercambios: ' + err.message)
-      console.error(err)
     } else if (data) {
       setIntercambios(data as any[])
     }
-    setLoadingIntercambios(false)
+    setLoadingInter(false)
   }
 
   const crearIntercambio = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    setSuccess('')
 
     if (!user || !cromoOfrecido || !cromoBuscado) {
       setError('Debes seleccionar ambos cromos')
       return
     }
-
     if (!supabase) return
 
     const cromoBuscadoNum = parseInt(cromoBuscado)
@@ -102,7 +107,7 @@ export default function IntercambiosPage() {
       cromo_buscado_id: cromoBuscadoNum,
       ubicacion,
       notas,
-      estado: 'abierto'
+      estado: 'abierto',
     })
 
     if (error) {
@@ -112,152 +117,295 @@ export default function IntercambiosPage() {
       setCromoOfrecido('')
       setCromoBuscado('')
       setNotas('')
-      setError('')
+      setSuccess('¡Intercambio publicado!')
       loadIntercambios()
+      setTimeout(() => setSuccess(''), 3000)
     }
   }
 
-  if (!user) return null
+  if (!user && !loadingInter) return null
+
+  const intercambiosVisibles = intercambios.filter((i) => i.usuario_ofrece_id !== user?.id)
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-mundial-green to-green-800 text-white">
-      <div className="container mx-auto px-4 py-8">
-        <header className="mb-8">
-          <Link href="/" className="text-white/80 hover:text-white mb-4 inline-block">← Volver</Link>
-          <h1 className="text-4xl font-display font-bold mb-2">🔄 Intercambios en Ambato</h1>
-          <p className="text-xl">Encuentra personas con quien cambiar tus cromos repetidos</p>
-        </header>
+    <main className="min-h-screen pb-20">
+      {/* Header */}
+      <section className="container mx-auto px-4 lg:px-6 pt-8 pb-12">
+        <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+          <div className="badge-purple inline-flex mb-4">
+            <span>🔄</span>
+            <span>Comunidad Ambato</span>
+          </div>
+          <h1 className="page-title">
+            <span className="text-gradient">Intercambios</span>
+          </h1>
+          <p className="page-subtitle max-w-2xl mx-auto mt-4">
+            Conecta con coleccionistas en Ambato e intercambia tus cromos repetidos.
+          </p>
+        </div>
+      </section>
 
-        <div className="max-w-4xl mx-auto mb-8">
+      {/* CTA + Form */}
+      <section className="container mx-auto px-4 lg:px-6 mb-8">
+        <div className="max-w-4xl mx-auto animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+          {success && (
+            <div className="mb-4 p-4 rounded-xl bg-mundial-green/10 border border-mundial-green/30 text-mundial-green-light text-center animate-fade-in">
+              ✅ {success}
+            </div>
+          )}
+
           <button
             onClick={() => setMostrarForm(!mostrarForm)}
-            className="mundial-btn-gold w-full md:w-auto"
+            className={mostrarForm ? 'btn-ghost w-full sm:w-auto' : 'btn-primary w-full sm:w-auto'}
           >
-            {mostrarForm ? 'Cancelar' : '+ Crear nueva oferta de intercambio'}
+            {mostrarForm ? (
+              <>
+                <span>✕</span>
+                Cancelar
+              </>
+            ) : (
+              <>
+                <span>+</span>
+                Crear oferta de intercambio
+              </>
+            )}
           </button>
 
           {mostrarForm && (
-            <form onSubmit={crearIntercambio} className="mt-4 bg-white/10 backdrop-blur rounded-xl p-6 space-y-4">
-              <h2 className="text-2xl font-bold mb-4">Nueva oferta de intercambio</h2>
+            <form
+              onSubmit={crearIntercambio}
+              className="mt-6 glass-premium p-6 lg:p-8 space-y-5 animate-scale-in"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-mundial-purple to-fuchsia-700 flex items-center justify-center shadow-glow-purple">
+                  <span className="text-xl">📝</span>
+                </div>
+                <div>
+                  <h2 className="text-xl font-display font-bold">Nueva oferta</h2>
+                  <p className="text-xs text-white/50">Publica un intercambio para la comunidad</p>
+                </div>
+              </div>
 
               {error && (
-                <div className="bg-red-500/20 border border-red-400 text-red-200 p-3 rounded-lg">
+                <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm">
                   {error}
                 </div>
               )}
 
               <div>
-                <label className="block mb-2">Tu cromo repetido (que ofreces):</label>
+                <label className="block text-xs font-semibold text-white/60 mb-2 uppercase tracking-wider">
+                  Tu cromo repetido (que ofreces)
+                </label>
                 <select
                   value={cromoOfrecido}
                   onChange={(e) => setCromoOfrecido(e.target.value)}
-                  className="w-full p-3 rounded-lg bg-white/20 text-white border border-white/30"
+                  className="input-premium"
                   required
                 >
                   <option value="">Selecciona un cromo repetido</option>
                   {misCromos.map((c: any) => (
-                    <option key={c.id} value={c.cromo_id}>
-                      #{c.cromos.numero_cromo} - {c.cromos.jugadores.nombre} {c.cromos.jugadores.apellido}
+                    <option key={c.id} value={c.cromo_id} className="bg-mundial-dark">
+                      #{c.cromos.numero_cromo} - {c.cromos.jugadores?.nombre} {c.cromos.jugadores?.apellido}
                     </option>
                   ))}
                 </select>
+                {misCromos.length === 0 && (
+                  <p className="text-xs text-mundial-gold mt-2">
+                    ⚠️ No tienes cromos repetidos aún
+                  </p>
+                )}
               </div>
 
               <div>
-                <label className="block mb-2">Cromo que buscas:</label>
+                <label className="block text-xs font-semibold text-white/60 mb-2 uppercase tracking-wider">
+                  Cromo que buscas (1-980)
+                </label>
                 <input
                   type="number"
-                  placeholder="Número del cromo que buscas"
+                  placeholder="Número del cromo"
                   value={cromoBuscado}
                   onChange={(e) => setCromoBuscado(e.target.value)}
-                  className="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/60 border border-white/30"
+                  className="input-premium"
+                  min={1}
+                  max={980}
                   required
                 />
               </div>
 
               <div>
-                <label className="block mb-2">Lugar de encuentro sugerido:</label>
+                <label className="block text-xs font-semibold text-white/60 mb-2 uppercase tracking-wider">
+                  Lugar de encuentro
+                </label>
                 <input
                   type="text"
                   placeholder="Ej: Parque Montalvo, Mall del Centro..."
                   value={ubicacion}
                   onChange={(e) => setUbicacion(e.target.value)}
-                  className="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/60 border border-white/30"
+                  className="input-premium"
                 />
               </div>
 
               <div>
-                <label className="block mb-2">Notas adicionales:</label>
+                <label className="block text-xs font-semibold text-white/60 mb-2 uppercase tracking-wider">
+                  Notas adicionales
+                </label>
                 <textarea
                   value={notas}
                   onChange={(e) => setNotas(e.target.value)}
-                  className="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/60 border border-white/30"
+                  className="input-premium resize-none"
                   rows={3}
                   placeholder="Horario preferido, condiciones, etc."
                 />
               </div>
 
-              <button type="submit" className="mundial-btn w-full">
+              <button type="submit" className="btn-primary w-full">
                 Publicar oferta
+                <span>→</span>
               </button>
             </form>
           )}
         </div>
+      </section>
 
-        {loadingIntercambios ? (
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mundial-gold"></div>
-          </div>
-        ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {intercambios.filter((i: Intercambio) => i.usuario_ofrece_id !== user?.id).map((inter: Intercambio) => (
-            <div key={inter.id} className="mundial-card p-6">
-              <div className="flex justify-between items-start mb-4">
-                <span className="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800">
-                  {inter.estado}
-                </span>
-                <span className="text-sm text-white/60">{inter.ubicacion}</span>
-              </div>
-
-              <div className="space-y-3 mb-4">
-                <div className="bg-white/10 p-3 rounded-lg">
-                  <p className="text-xs text-white/60">OFRECE:</p>
-                  <p className="font-bold">#{inter.cromo_ofrecido.numero_cromo} - {inter.cromo_ofrecido.jugadores.nombre} {inter.cromo_ofrecido.jugadores.apellido}</p>
-                </div>
-                <div className="bg-white/10 p-3 rounded-lg">
-                  <p className="text-xs text-white/60">BUSCA:</p>
-                  <p className="font-bold">#{inter.cromo_buscado.numero_cromo}</p>
-                </div>
-              </div>
-
-              {inter.notas && (
-                <p className="text-sm text-white/80 mb-4 italic">"{inter.notas}"</p>
-              )}
-
-              <div className="border-t border-white/20 pt-4">
-                <p className="text-sm mb-2">Contacto: {inter.perfiles.nombre}</p>
-                {inter.perfiles.whatsapp && (
-                  <a
-                    href={`https://wa.me/${inter.perfiles.whatsapp}`}
-                    target="_blank"
-                    rel="noopener"
-                    className="mundial-btn w-full text-center block"
-                  >
-                    Contactar por WhatsApp
-                  </a>
-                )}
-              </div>
+      {/* Intercambios List */}
+      <section className="container mx-auto px-4 lg:px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-display font-bold">
+              Ofertas <span className="text-gradient">activas</span>
+            </h2>
+            <div className="text-sm text-white/40 font-mono">
+              {intercambiosVisibles.length} {intercambiosVisibles.length === 1 ? 'oferta' : 'ofertas'}
             </div>
-          ))}
-        </div>
+          </div>
 
-        {intercambios.filter((i: Intercambio) => i.usuario_ofrece_id !== user?.id).length === 0 && !loadingIntercambios && (
-          <p className="text-center text-white/60 mt-8">
-            No hay ofertas de intercambio disponibles en este momento.
-          </p>
-        )}
+          {loadingInter ? (
+            <div className="flex justify-center py-16">
+              <div className="loader-premium"></div>
+            </div>
+          ) : intercambiosVisibles.length === 0 ? (
+            <div className="max-w-md mx-auto glass-premium p-10 text-center">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-xl font-bold mb-2">No hay ofertas activas</h3>
+              <p className="text-white/50 mb-6">
+                Sé el primero en publicar una oferta de intercambio
+              </p>
+              <button
+                onClick={() => setMostrarForm(true)}
+                className="btn-primary inline-flex"
+              >
+                Crear oferta
+                <span>→</span>
+              </button>
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+              {intercambiosVisibles.map((inter, i) => (
+                <article
+                  key={inter.id}
+                  className="glass-card-hover p-5 group animate-fade-in-up"
+                  style={{ animationDelay: `${Math.min(i * 50, 400)}ms` }}
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-mundial-green animate-pulse"></span>
+                      <span className="text-xs font-semibold text-mundial-green-light uppercase tracking-wider">
+                        Activa
+                      </span>
+                    </div>
+                    <div className="text-xs text-white/40 flex items-center gap-1">
+                      <span>📍</span>
+                      <span className="truncate max-w-[100px]">{inter.ubicacion}</span>
+                    </div>
+                  </div>
+
+                  {/* Ofrece */}
+                  <div className="mb-3 p-3 rounded-xl bg-gradient-to-r from-mundial-green/10 to-emerald-700/5 border border-mundial-green/20">
+                    <div className="text-[10px] font-bold text-mundial-green-light uppercase tracking-widest mb-1">
+                      Ofrece
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-sm">
+                        {inter.cromo_ofrecido?.jugadores
+                          ? `${inter.cromo_ofrecido.jugadores.nombre} ${inter.cromo_ofrecido.jugadores.apellido}`
+                          : 'Cromo'}
+                      </span>
+                      <span className="text-xs font-mono bg-white/10 px-2 py-1 rounded-md">
+                        #{inter.cromo_ofrecido?.numero_cromo}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Arrow */}
+                  <div className="flex justify-center my-2">
+                    <span className="text-mundial-gold text-lg">⇅</span>
+                  </div>
+
+                  {/* Busca */}
+                  <div className="mb-4 p-3 rounded-xl bg-gradient-to-r from-mundial-gold/10 to-amber-700/5 border border-mundial-gold/20">
+                    <div className="text-[10px] font-bold text-mundial-gold-light uppercase tracking-widest mb-1">
+                      Busca
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-sm">
+                        {inter.cromo_buscado?.jugadores
+                          ? `${inter.cromo_buscado.jugadores.nombre} ${inter.cromo_buscado.jugadores.apellido}`
+                          : `Cromo #${inter.cromo_buscado?.numero_cromo}`}
+                      </span>
+                      <span className="text-xs font-mono bg-white/10 px-2 py-1 rounded-md">
+                        #{inter.cromo_buscado?.numero_cromo}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Notes */}
+                  {inter.notas && (
+                    <div className="mb-4 p-3 rounded-xl bg-white/5 border border-white/5">
+                      <p className="text-xs text-white/70 italic line-clamp-2">"{inter.notas}"</p>
+                    </div>
+                  )}
+
+                  {/* Footer */}
+                  <div className="pt-4 border-t border-white/5">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-mundial-cyan to-mundial-purple flex items-center justify-center text-xs font-bold">
+                          {inter.perfiles?.nombre?.[0]?.toUpperCase() || '?'}
+                        </div>
+                        <span className="text-sm text-white/80">
+                          {inter.perfiles?.nombre || 'Coleccionista'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {inter.perfiles?.whatsapp ? (
+                      <a
+                        href={`https://wa.me/${inter.perfiles.whatsapp}?text=Hola! Vi tu oferta de intercambio en Mundial Ambato 2026`}
+                        target="_blank"
+                        rel="noopener"
+                        className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-semibold hover:shadow-glow-green transition-all"
+                      >
+                        <span>💬</span>
+                        Contactar por WhatsApp
+                      </a>
+                    ) : (
+                      <div className="text-center text-xs text-white/40 py-2">
+                        Sin WhatsApp registrado
+                      </div>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
-        )}
+      </section>
+
+      <div className="text-center mt-12">
+        <Link href="/" className="text-white/40 hover:text-white text-sm transition-colors">
+          ← Volver al inicio
+        </Link>
       </div>
     </main>
   )
