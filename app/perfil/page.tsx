@@ -55,6 +55,18 @@ export default function PerfilPage() {
 
     if (!supabase || !user) return
 
+    if (whatsapp && !/^\d{10,}$/.test(whatsapp)) {
+      setMessage('WhatsApp debe ser un número válido sin símbolos (ej: 593999999999)')
+      setSaving(false)
+      return
+    }
+
+    if (!nombre.trim()) {
+      setMessage('El nombre es requerido')
+      setSaving(false)
+      return
+    }
+
     const { error } = await supabase
       .from('perfiles')
       .upsert({

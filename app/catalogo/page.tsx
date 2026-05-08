@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { supabase } from '@/lib/supabase'
 
 interface Seleccion {
   id: number;
@@ -16,12 +17,30 @@ export default function CatalogoPage() {
   const [selecciones, setSelecciones] = useState<Seleccion[]>([])
   const [filtro, setFiltro] = useState('')
   const [confederacion, setConfederacion] = useState('todas')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/data/selecciones.json')
-      .then(res => res.json())
-      .then(data => setSelecciones(data))
+    loadSelecciones()
   }, [])
+
+  const loadSelecciones = async () => {
+    if (!supabase) {
+      console.error('Supabase no configurado')
+      setLoading(false)
+      return
+    }
+    const { data, error } = await supabase
+      .from('selecciones')
+      .select('*')
+      .order('orden_album')
+
+    if (error) {
+      console.error('Error cargando selecciones:', error)
+    } else if (data) {
+      setSelecciones(data)
+    }
+    setLoading(false)
+  }
 
   const seleccionesFiltradas = selecciones.filter(s => {
     const matchNombre = s.nombre.toLowerCase().includes(filtro.toLowerCase())
@@ -39,6 +58,14 @@ export default function CatalogoPage() {
       'OFC': 'bg-purple-100 text-purple-800'
     }
     return colores[conf] || 'bg-gray-100'
+  }
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-gradient-to-b from-mundial-green to-green-800 text-white flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-mundial-gold"></div>
+      </main>
+    )
   }
 
   return (
@@ -99,9 +126,17 @@ export default function CatalogoPage() {
           ))}
         </div>
 
-        <div className="text-center mt-8 text-white/80">
-          Mostrando {seleccionesFiltradas.length} de {selecciones.length} selecciones
-        </div>
+        {seleccionesFiltradas.length === 0 && (
+          <div className="text-center mt-8 text-white/80">
+            No se encontraron selecciones
+          </div>
+        )}
+
+        {seleccionesFiltradas.length > 0 && (
+          <div className="text-center mt-8 text-white/80">
+            Mostrando {seleccionesFiltradas.length} de {selecciones.length} selecciones
+          </div>
+        )}
       </div>
     </main>
   )

@@ -1,0 +1,539 @@
+-- =============================================
+-- MUNDIALE AMBATO 2026 - PART 3: Teams 33-48
+-- =============================================
+
+-- FRANCE (33)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Mike', 'Maignan', 1, 'Portero', 'Milan', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Alphonse', 'Aréola', 12, 'Portero', 'West Ham', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Brice', 'Samba', 23, 'Portero', 'Lens', 30, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Benjamin', 'Pavard', 2, 'Defensor', 'Inter Milán', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Dayot', 'Upamecano', 3, 'Defensor', 'Bayern Múnich', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'William', 'Saliba', 4, 'Defensor', 'Arsenal', 23, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Théo', 'Hernández', 5, 'Defensor', 'Milan', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Jonathan', 'Clauss', 13, 'Defensor', 'Marseille', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Ibrahima', 'Konaté', 14, 'Defensor', 'Liverpool', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Aurélien', 'Tchouaméni', 6, 'Centrocampista', 'Real Madrid', 24, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Antoine', 'Griezmann', 8, 'Centrocampista', 'Atlético Madrid', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Kylian', 'Mbappé', 10, 'Centrocampista', 'Real Madrid', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Eduardo', 'Camavinga', 15, 'Centrocampista', 'Real Madrid', 21, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Ousmane', 'Dembélé', 7, 'Delantero', 'Paris Saint-Germain', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Olivier', 'Giroud', 9, 'Delantero', 'Los Angeles FC', 37, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Kingsley', 'Coman', 11, 'Delantero', 'Bayern Múnich', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Randal', 'Kolo Muani', 18, 'Delantero', 'Paris Saint-Germain', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Warren', 'Zaïre-Emery', 17, 'Delantero', 'Paris Saint-Germain', 18, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Youssouf', 'Fofana', 16, 'Centrocampista', 'Monaco', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Adrien', 'Rabiot', 20, 'Centrocampista', 'Juventus', 29, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Jordan', 'Veretout', 21, 'Centrocampista', 'Lyon', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Marcus', 'Thuram', 22, 'Delantero', 'Inter Milán', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Lucas', 'Hernández', 24, 'Defensor', 'Paris Saint-Germain', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Hugo', 'Lloris', 25, 'Portero', 'Retired', 37, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Léo', 'Dubois', 19, 'Defensor', 'Lyon', 29, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'FRA'), 'Matteo', 'Guendouzi', 26, 'Centrocampista', 'Lazio', 25, false)
+ON CONFLICT DO NOTHING;
+
+-- SENEGAL (34)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Édouard', 'Mendy', 1, 'Portero', 'Al-Ahli', 32, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Alfred', 'Gomis', 12, 'Portero', 'Lille', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Mory', 'Diallo', 23, 'Portero', 'Djurgårdens', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Kalidou', 'Koulibaly', 2, 'Defensor', 'Al-Hilal', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Abdou', 'Diallo', 3, 'Defensor', 'PAOK', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Pape', 'Díop', 4, 'Defensor', 'Monaco', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Mamadou', 'Sabaly', 5, 'Defensor', 'Betis', 31, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Fodé', 'Balló-Touré', 13, 'Defensor', 'Milan', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Moussa', 'Ndiaye', 14, 'Defensor', 'Montpellier', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Idrissa', 'Gueye', 6, 'Centrocampista', 'Everton', 34, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Pape', 'Gueye', 8, 'Centrocampista', 'Marseille', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Sadio', 'Mané', 10, 'Centrocampista', 'Al-Nassr', 32, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Krépin', 'Diatta', 15, 'Centrocampista', 'Monaco', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Ismaïla', 'Sarr', 7, 'Delantero', 'Crystal Palace', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Bamba', 'Dieng', 9, 'Delantero', 'Lorient', 23, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Nicolas', 'Jackson', 11, 'Delantero', 'Chelsea', 23, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Habib', 'Diallo', 18, 'Delantero', 'Brest', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Iliman', 'Ndiaye', 17, 'Delantero', 'Sheffield United', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Pape', 'Sarr', 16, 'Centrocampista', 'Tottenham', 21, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Cheikhou', 'Kouyaté', 20, 'Centrocampista', 'Crystal Palace', 34, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Mamadou', 'Loum', 21, 'Centrocampista', 'Espanyol', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Saliou', 'Ciss', 22, 'Delantero', 'Fulham', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Moustapha', 'Name', 24, 'Defensor', 'Valladolid', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Sene', 'Diop', 26, 'Portero', 'Guingamp', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Formose', 'Mendy', 19, 'Defensor', 'Lens', 29, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SEN'), 'Pathé', 'Cissé', 25, 'Centrocampista', 'Lorient', 26, false)
+ON CONFLICT DO NOTHING;
+
+-- IRAQ (35)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Jalal', 'Hassan', 1, 'Portero', 'Al-Quwa Al-Jawiya', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Fahad', 'Talib', 12, 'Portero', 'Al-Zawra''a', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Ahmed', 'Basil', 23, 'Portero', 'Al-Talaba', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Rebin', 'Sulaka', 2, 'Defensor', 'Al-Quwa Al-Jawiya', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Franso', 'Hariri', 3, 'Defensor', 'Zakho', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Mustafa', 'Muhammad', 4, 'Defensor', 'Al-Shorta', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Ali', 'Adnan', 5, 'Defensor', 'Al-Nasr', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Hussein', 'Ali', 13, 'Defensor', 'Al-Quwa Al-Jawiya', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Zaid', 'Tahseen', 14, 'Defensor', 'Al-Zawra''a', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Amjad', 'Attwan', 6, 'Centrocampista', 'Al-Shorta', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Bashar', 'Resan', 8, 'Centrocampista', 'Al-Quwa Al-Jawiya', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Mohanad', 'Ali', 10, 'Centrocampista', 'Al-Shorta', 31, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Ibrahim', 'Bayesh', 15, 'Centrocampista', 'Al-Quwa Al-Jawiya', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Hussein', 'Abdullah', 7, 'Delantero', 'Al-Shorta', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Ayman', 'Hussein', 9, 'Delantero', 'Al-Quwa Al-Jawiya', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Ali', 'Yousif', 11, 'Delantero', 'Al-Zawra''a', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Mohammed', 'Qasim', 18, 'Delantero', 'Al-Talaba', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Hussein', 'Jabbar', 17, 'Delantero', 'Al-Shorta', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Safaa', 'Hadi', 16, 'Centrocampista', 'Al-Zawra''a', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Muntadher', 'Mohammed', 20, 'Centrocampista', 'Al-Quwa Al-Jawiya', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Ahmed', 'Farhan', 21, 'Delantero', 'Al-Talaba', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Wissam', 'Saad', 22, 'Delantero', 'Al-Shorta', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Mustafa', 'Nawaf', 24, 'Defensor', 'Al-Shorta', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Ali', 'Yaseen', 26, 'Portero', 'Al-Shorta', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Hussein', 'Amin', 19, 'Defensor', 'Al-Quwa Al-Jawiya', 29, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'IRQ'), 'Bassam', 'Ali', 25, 'Centrocampista', 'Al-Zawra''a', 26, false)
+ON CONFLICT DO NOTHING;
+
+-- NORWAY (36)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Ørjan', 'Nyland', 1, 'Portero', 'Sevilla', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Egill', 'Hansen', 12, 'Portero', 'Bodø/Glimt', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Mathias', 'Dyngeland', 23, 'Portero', 'Brann', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Kristoffer', 'Ajer', 2, 'Defensor', 'Brentford', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Stefan', 'Strandberg', 3, 'Defensor', 'Genoa', 34, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Bendik', 'Bye', 4, 'Defensor', 'Molde', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Birger', 'Meling', 5, 'Defensor', 'Genoa', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Julian', 'Ryerson', 13, 'Defensor', 'Borussia Dortmund', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Leo', 'Skiri', 14, 'Defensor', 'Lecce', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Martin', 'Ødegaard', 6, 'Centrocampista', 'Arsenal', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Mohamed', 'Elyounoussi', 8, 'Centrocampista', 'Copenhagen', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Erling', 'Haaland', 10, 'Centrocampista', 'Manchester City', 23, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Morten', 'Thorsby', 15, 'Centrocampista', 'Sevilla', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Alexander', 'Sørloth', 7, 'Delantero', 'Atlético Madrid', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Joshua', 'King', 9, 'Delantero', 'Fenerbahçe', 32, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Jens', 'Petter Hauge', 11, 'Delantero', 'Molde', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Bryan', 'Finn', 18, 'Delantero', 'Strømsgodset', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Adama', 'Diomande', 17, 'Delantero', 'Lyon', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Patrick', 'Berg', 16, 'Centrocampista', 'Lens', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Fredrik', 'Midtsjø', 20, 'Centrocampista', 'Borussia Mönchengladbach', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Anders', 'Konradsen', 21, 'Centrocampista', 'Bodø/Glimt', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Ola', 'Sveen', 22, 'Delantero', 'Viking', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Håkon', 'Valen', 24, 'Defensor', 'Brann', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Stian', 'Rode', 26, 'Portero', 'Rosenborg', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Hugo', 'Vetlesen', 19, 'Centrocampista', 'Bodø/Glimt', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'NOR'), 'Sivert', 'Mannsverk', 25, 'Centrocampista', 'Molde', 23, false)
+ON CONFLICT DO NOTHING;
+
+-- ARGENTINA (37)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Emiliano', 'Martínez', 1, 'Portero', 'Aston Villa', 31, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Franco', 'Armani', 12, 'Portero', 'River Plate', 38, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Juan', 'Musso', 23, 'Portero', 'Atalanta', 30, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Nahuel', 'Molina', 2, 'Defensor', 'Atlético Madrid', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Cristian', 'Romero', 3, 'Defensor', 'Tottenham', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Gonzalo', 'Montiel', 4, 'Defensor', 'River Plate', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Leandro', 'Paredes', 5, 'Defensor', 'Roma', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Marcos', 'Acuña', 13, 'Defensor', 'River Plate', 32, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Lisandro', 'Martínez', 14, 'Defensor', 'Manchester United', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Alexis', 'Mac Allister', 6, 'Centrocampista', 'Liverpool', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Exequiel', 'Palacios', 8, 'Centrocampista', 'Bayer Leverkusen', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Lionel', 'Messi', 10, 'Centrocampista', 'Inter Miami', 38, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Giovani', 'Lo Celso', 15, 'Centrocampista', 'Tottenham', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Ángel', 'Di María', 7, 'Delantero', 'Benfica', 36, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Julián', 'Álvarez', 9, 'Delantero', 'Atlético Madrid', 24, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Lautaro', 'Martínez', 11, 'Delantero', 'Inter Milán', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Alejandro', 'Garnacho', 18, 'Delantero', 'Manchester United', 20, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Nicolás', 'González', 17, 'Delantero', 'Fiorentina', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Enzo', 'Fernández', 16, 'Centrocampista', 'Chelsea', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Nicolás', 'Tagliafico', 20, 'Centrocampista', 'Lyon', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Valentín', 'Carboni', 21, 'Centrocampista', 'Monza', 21, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Matías', 'Soulé', 22, 'Delantero', 'Roma', 21, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Germán', 'Pezzella', 24, 'Defensor', 'Betis', 32, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Walter', 'Benítez', 25, 'Portero', 'PSV', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Thiago', 'Almada', 19, 'Centrocampista', 'Atlético Madrid', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ARG'), 'Nicolás', 'Otamendi', 26, 'Defensor', 'Benfica', 36, false)
+ON CONFLICT DO NOTHING;
+
+-- ALGERIA (38)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Raïs', 'M''Bolhi', 1, 'Portero', 'Al-Qadsiah', 38, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Alexandre', 'Oukidja', 12, 'Portero', 'Metz', 36, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Zakaria', 'Bougherra', 23, 'Portero', 'USM Alger', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Aïssa', 'Mandì', 2, 'Defensor', 'Lille', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Ramy', 'Bensebaini', 3, 'Defensor', 'Borussia Dortmund', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Youcef', 'Atal', 4, 'Defensor', 'Al-Arabi', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Mohamed', 'Fares', 5, 'Defensor', 'Lazio', 31, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Ahmed', 'Touba', 13, 'Defensor', 'Kasimpaşa', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Mehdi', 'Tahrat', 14, 'Defensor', 'Al-Arabi', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Ismaël', 'Bennacer', 6, 'Centrocampista', 'Milan', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Riyad', 'Mahrez', 8, 'Centrocampista', 'Al-Ahli', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Sofiane', 'Feghouli', 10, 'Centrocampista', 'Retired', 34, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Houssem', 'Aouar', 15, 'Centrocampista', 'Lyon', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Islam', 'Slimani', 7, 'Delantero', 'Corinthians', 35, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Baghdad', 'Bounedjah', 9, 'Delantero', 'Al-Sadd', 32, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Amir', 'Sayoud', 11, 'Delantero', 'USM Alger', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Mohamed', 'Amoura', 18, 'Delantero', 'Wolfsburg', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Abderrahmane', 'Bourdim', 17, 'Delantero', 'MC Alger', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Adem', 'Zorgane', 16, 'Centrocampista', 'Charleroi', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Mehdi', 'Zerkane', 20, 'Centrocampista', 'Bordeaux', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Haris', 'Belkebla', 21, 'Centrocampista', 'Club Africain', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Zakaria', 'Draoui', 22, 'Delantero', 'ES Sétif', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Merouane', 'Khalfaoui', 24, 'Defensor', 'Paradou AC', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Moustapha', 'Zeghba', 26, 'Portero', 'ES Sétif', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Yanis', 'Hamache', 19, 'Centrocampista', 'Paradou AC', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ALG'), 'Ilyes', 'Chetti', 25, 'Defensor', 'USM Alger', 29, false)
+ON CONFLICT DO NOTHING;
+
+-- AUSTRIA (39)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Patrick', 'Pentz', 1, 'Portero', 'Brøndby', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Heinz', 'Lindbichler', 12, 'Portero', 'LASK', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Nikolas', 'Polster', 23, 'Portero', 'Wiener Viktoria', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Stefan', 'Posch', 2, 'Defensor', 'Bologna', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Kevin', 'Wimmer', 3, 'Defensor', 'Rapid Viena', 31, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Maximilian', 'Wöber', 4, 'Defensor', 'Leeds United', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Philipp', 'Lienhart', 5, 'Defensor', 'Freiburg', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Andreas', 'Ulmer', 13, 'Defensor', 'Salzburgo', 36, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Gernot', 'Trauner', 14, 'Defensor', 'Feyenoord', 30, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Konrad', 'Laimer', 6, 'Centrocampista', 'Bayern Múnich', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Marcel', 'Sabitzer', 8, 'Centrocampista', 'Borussia Dortmund', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Christoph', 'Baumgartner', 10, 'Centrocampista', 'RB Leipzig', 24, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Xaver', 'Schlager', 15, 'Centrocampista', 'Wolfsburg', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Marko', 'Arnautovic', 7, 'Delantero', 'Inter Milán', 35, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Michael', 'Gregoritsch', 9, 'Delantero', 'Freiburg', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Benedikt', 'Zech', 11, 'Delantero', 'LASK', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Thierno', 'Ball', 18, 'Delantero', 'Sturm Graz', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Roman', 'Kerschbaum', 17, 'Delantero', 'Rapid Viena', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Nicolas', 'Sekov', 16, 'Centrocampista', 'Salzburgo', 21, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Florian', 'Grbic', 20, 'Centrocampista', 'Lens', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Salih', 'Mercan', 21, 'Centrocampista', 'Sturm Graz', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Manprit', 'Sarkaria', 22, 'Delantero', 'Sturm Graz', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'David', 'Alaba', 24, 'Defensor', 'Real Madrid', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Daniel', 'Schütz', 26, 'Portero', 'Austria Klagenfurt', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Marco', 'Friedl', 19, 'Defensor', 'Werder Bremen', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'AUT'), 'Louis', 'Schaub', 25, 'Centrocampista', 'Rapid Viena', 31, false)
+ON CONFLICT DO NOTHING;
+
+-- JORDAN (40)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Ahmed', 'Abdel-Sattar', 1, 'Portero', 'Al-Wehdat', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Moataz', 'Yaseen', 12, 'Portero', 'Al-Faisaly', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Khalid', 'Ibrahim', 23, 'Portero', 'Al-Ramtha', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Ihsan', 'Haddad', 2, 'Defensor', 'Al-Wehdat', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Tareq', 'Khattab', 3, 'Defensor', 'Al-Hussein', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Bara', 'Marei', 4, 'Defensor', 'Al-Wehdat', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Yazan', 'Al-Arab', 5, 'Defensor', 'Al-Faisaly', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Ebrima', 'Dibba', 13, 'Defensor', 'Al-Ramtha', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Yousef', 'Abu Jalbosh', 14, 'Defensor', 'Al-Jazeera', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Ahmed', 'Sariweh', 6, 'Centrocampista', 'Al-Wehdat', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Noor', 'Al-Rawabdeh', 8, 'Centrocampista', 'Al-Hussein', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Musa', 'Al-Taamari', 10, 'Centrocampista', 'Montpellier', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Mohammad', 'Abu Hashish', 15, 'Centrocampista', 'Al-Faisaly', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Yazan', 'Al-Naimat', 7, 'Delantero', 'Al-Arabi', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Ali', 'Olwan', 9, 'Delantero', 'Al-Hussein', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Hamza', 'Al-Dardour', 11, 'Delantero', 'Al-Wehdat', 32, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Feras', 'Shelbaieh', 18, 'Delantero', 'Al-Jazeera', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Reziq', 'Bani Hani', 17, 'Delantero', 'Al-Ramtha', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Waseem', 'Al-Riyalat', 16, 'Centrocampista', 'Al-Wehdat', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Ibrahim', 'Sabah', 20, 'Centrocampista', 'Al-Faisaly', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Mohanad', 'Al-Saafa', 21, 'Delantero', 'Al-Hussein', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Saeed', 'Murjan', 22, 'Delantero', 'Al-Jazeera', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Malek', 'Shalabi', 24, 'Defensor', 'Al-Ramtha', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Ahmad', 'Abu Jalbosh', 26, 'Portero', 'Al-Jazeera', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Anas', 'Al-Awadat', 19, 'Centrocampista', 'Al-Wehdat', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'JOR'), 'Saed', 'Al-Rosan', 25, 'Centrocampista', 'Al-Faisaly', 26, false)
+ON CONFLICT DO NOTHING;
+
+-- PORTUGAL (41)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Diogo', 'Costa', 1, 'Portero', 'Porto', 24, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Rui', 'Patrício', 12, 'Portero', 'Roma', 36, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'José', 'Sá', 23, 'Portero', 'Wolverhampton', 30, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'João', 'Cancelo', 2, 'Defensor', 'Barcelona', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Rúben', 'Dias', 3, 'Defensor', 'Manchester City', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Danilo', 'Pereira', 4, 'Defensor', 'Paris Saint-Germain', 32, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Nuno', 'Mendes', 5, 'Defensor', 'Paris Saint-Germain', 21, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Diogo', 'Dalot', 13, 'Defensor', 'Manchester United', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'António', 'Silva', 14, 'Defensor', 'Benfica', 20, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Bruno', 'Fernandes', 6, 'Centrocampista', 'Manchester United', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Bernardo', 'Silva', 8, 'Centrocampista', 'Manchester City', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Cristiano', 'Ronaldo', 10, 'Centrocampista', 'Al-Nassr', 39, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'João', 'Palhinha', 15, 'Centrocampista', 'Bayern Múnich', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Rafa', 'Silva', 7, 'Delantero', 'Benfica', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Gonçalo', 'Ramos', 9, 'Delantero', 'Paris Saint-Germain', 22, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'João', 'Félix', 11, 'Delantero', 'Barcelona', 24, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Francisco', 'Conceição', 18, 'Delantero', 'Porto', 21, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Pedro', 'Neto', 17, 'Delantero', 'Wolverhampton', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Matheus', 'Nunes', 16, 'Centrocampista', 'Manchester City', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Otávio', 'Monteiro', 20, 'Centrocampista', 'Al-Nassr', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Rúben', 'Neves', 21, 'Centrocampista', 'Al-Hilal', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Diogo', 'Jota', 22, 'Delantero', 'Liverpool', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Gonçalo', 'Inácio', 24, 'Defensor', 'Sporting', 22, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Rui', 'Silva', 25, 'Portero', 'Sporting', 30, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Nélson', 'Semedo', 19, 'Defensor', 'Wolverhampton', 30, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'POR'), 'Vitinha', 'Ferreira', 26, 'Centrocampista', 'Paris Saint-Germain', 23, false)
+ON CONFLICT DO NOTHING;
+
+-- DR CONGO (42)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Boni', 'Muxiti', 1, 'Portero', 'TP Mazembe', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Hervé', 'Lomboto', 12, 'Portero', 'AS Vita Club', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Dimitri', 'Batikane', 23, 'Portero', 'DC Motema Pembe', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Arthur', 'Masuaku', 2, 'Defensor', 'AEK Atenas', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Chancel', 'Mbemba', 3, 'Defensor', 'Olympique Marsella', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Bobo', 'Usseni', 4, 'Defensor', 'TP Mazembe', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Jody', 'Lukoki', 5, 'Defensor', 'AS Vita Club', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Djédjé', 'Bolati', 13, 'Defensor', 'AS Maniema Union', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Glody', 'Nzuzi', 14, 'Defensor', 'DC Motema Pembe', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Gael', 'Kakuta', 6, 'Centrocampista', 'Amiens', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Cédric', 'Bakambu', 8, 'Centrocampista', 'Betis', 32, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Théo', 'Bongonda', 10, 'Centrocampista', 'Nantes', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Meschak', 'Elia', 15, 'Centrocampista', 'Young Boys', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Yoane', 'Wissa', 7, 'Delantero', 'Brentford', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Dieumerci', 'Mbokani', 9, 'Delantero', 'Retired', 37, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Cédric', 'Bakambu', 11, 'Delantero', 'Betis', 32, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Jackson', 'Muleka', 18, 'Delantero', 'Betis', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Ngalamulume', 'Keser', 17, 'Delantero', 'TP Mazembe', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Andy', 'Bwalya', 16, 'Centrocampista', 'AS Vita Club', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Fabrice', 'Ngoma', 20, 'Centrocampista', 'DC Motema Pembe', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Ben', 'Malango', 21, 'Delantero', 'San Jose Earthquakes', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Dylan', 'Batubinsika', 22, 'Defensor', 'Guingamp', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Rocky', 'Bosomba', 24, 'Defensor', 'AS Vita Club', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Barel', 'Mubululu', 26, 'Portero', 'TP Mazembe', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Grady', 'Diangana', 19, 'Centrocampista', 'West Bromwich', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COD'), 'Samuel', 'Moutoussamy', 25, 'Centrocampista', 'Nantes', 27, false)
+ON CONFLICT DO NOTHING;
+
+-- UZBEKISTAN (43)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Utkir', 'Yusupov', 1, 'Portero', 'Pakhtakor', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Botir', 'Nurmatov', 12, 'Portero', 'Bunyodkor', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Javokhir', 'Ergashev', 23, 'Portero', 'Navbahor', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Rustam', 'Ashurmatov', 2, 'Defensor', 'Pakhtakor', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Diyor', 'Yuldoshev', 3, 'Defensor', 'Nasaf', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Farrukh', 'Sayfiev', 4, 'Defensor', 'Pakhtakor', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Alijon', 'Karimov', 5, 'Defensor', 'Navbahor', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Mirob', 'Khamdamov', 13, 'Defensor', 'Bunyodkor', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Khojimat', 'Eshmurodov', 14, 'Defensor', 'Nasaf', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Otabek', 'Shukurov', 6, 'Centrocampista', 'Pakhtakor', 31, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Jaloliddin', 'Masharipov', 8, 'Centrocampista', 'Pakhtakor', 31, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Eldor', 'Shomurodov', 10, 'Centrocampista', 'Roma', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Abbosbek', 'Fayzullaev', 15, 'Centrocampista', 'CSKA Moscú', 22, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Oston', 'Urunov', 7, 'Delantero', 'Pakhtakor', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Bobur', 'Abdikhodjaev', 9, 'Delantero', 'Navbahor', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Igor', 'Sergeev', 11, 'Delantero', 'Pakhtakor', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Khojimat', 'Erkinov', 18, 'Delantero', 'Pakhtakor', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Mirzhakhon', 'Ismoilov', 17, 'Delantero', 'Nasaf', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Azizbek', 'Turgunboev', 16, 'Centrocampista', 'Pakhtakor', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Sardor', 'Rashidov', 20, 'Centrocampista', 'Navbahor', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Bobur', 'Iskandarov', 21, 'Delantero', 'Bunyodkor', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Umar', 'Eshmurodov', 22, 'Delantero', 'Nasaf', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Mirkomil', 'Tursunov', 24, 'Defensor', 'Pakhtakor', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Sanjar', 'Kuvvatov', 26, 'Portero', 'Bunyodkor', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Sherzod', 'Nasrullaev', 19, 'Centrocampista', 'Navbahor', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'UZB'), 'Islom', 'Tukhtakhujaev', 25, 'Defensor', 'Navbahor', 29, false)
+ON CONFLICT DO NOTHING;
+
+-- COLOMBIA (44)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'David', 'Ospina', 1, 'Portero', 'Al-Nassr', 35, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Camilo', 'Vargas', 12, 'Portero', 'Atlas', 35, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Álvaro', 'Montero', 23, 'Portero', 'Sporting Cristal', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Santiago', 'Arias', 2, 'Defensor', 'Atlético Nacional', 31, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Yerry', 'Mina', 3, 'Defensor', 'Cagliari', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Jhon', 'Lucumí', 4, 'Defensor', 'Bologna', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Johan', 'Mojiça', 5, 'Defensor', 'Sporting', 32, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Déiber', 'Caicedo', 13, 'Defensor', 'Lens', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Baldomero', 'Perlaza', 14, 'Defensor', 'Atlético Nacional', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Mateus', 'Uribe', 6, 'Centrocampista', 'Atlético Nacional', 32, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Juan', 'Cuadrado', 8, 'Centrocampista', 'Atlético Nacional', 36, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'James', 'Rodríguez', 10, 'Centrocampista', 'Rayo Vallecano', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Jhon', 'Ariaz', 15, 'Centrocampista', 'Palmeiras', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Luis', 'Díaz', 7, 'Delantero', 'Liverpool', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Duván', 'Zapata', 9, 'Delantero', 'Torino', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Rafael', 'Santos Borré', 11, 'Delantero', 'Internacional', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Jhon', 'Córdoba', 18, 'Delantero', 'Krasnodar', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Yaser', 'Aspriila', 17, 'Delantero', 'Villarreal', 21, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Jefferson', 'Lerma', 16, 'Centrocampista', 'Crystal Palace', 29, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Gustavo', 'Cuéllar', 20, 'Centrocampista', 'Al-Shabab', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Jorge', 'Carrascal', 21, 'Centrocampista', 'Santos', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Jhon', 'Vásquez', 22, 'Delantero', 'Tijuana', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Davinson', 'Sánchez', 24, 'Defensor', 'Galatasaray', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Kevin', 'Mier', 26, 'Portero', 'Cruz Azul', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Cristian', 'Borja', 19, 'Centrocampista', 'Porto', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'COL'), 'Johan', 'Rojas', 25, 'Delantero', 'Genk', 23, false)
+ON CONFLICT DO NOTHING;
+
+-- ENGLAND (45)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Jordan', 'Pickford', 1, 'Portero', 'Everton', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Aaron', 'Ramsdale', 12, 'Portero', 'Sporting', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'James', 'Trafford', 23, 'Portero', 'Burnley', 21, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Kyle', 'Walker', 2, 'Defensor', 'Manchester City', 34, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'John', 'Stones', 3, 'Defensor', 'Manchester City', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Harry', 'Maguire', 4, 'Defensor', 'Manchester United', 31, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Levi', 'Colwill', 5, 'Defensor', 'Chelsea', 21, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Kieran', 'Trippier', 13, 'Defensor', 'Newcastle', 33, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Ezri', 'Konsa', 14, 'Defensor', 'Aston Villa', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Declan', 'Rice', 6, 'Centrocampista', 'Arsenal', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Jude', 'Bellingham', 8, 'Centrocampista', 'Real Madrid', 21, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Harry', 'Kane', 10, 'Centrocampista', 'Bayern Múnich', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Cole', 'Palmer', 15, 'Centrocampista', 'Chelsea', 22, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Phil', 'Foden', 7, 'Delantero', 'Manchester City', 24, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Ollie', 'Watkins', 9, 'Delantero', 'Aston Villa', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Bukayo', 'Saka', 11, 'Delantero', 'Arsenal', 23, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Anthony', 'Gordon', 18, 'Delantero', 'Newcastle', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Morgan', 'Gibbs-White', 17, 'Delantero', 'Nottingham Forest', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Conor', 'Gallagher', 16, 'Centrocampista', 'Atlético Madrid', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Eberechi', 'Eze', 20, 'Centrocampista', 'Crystal Palace', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Jack', 'Grealish', 21, 'Centrocampista', 'Manchester City', 29, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Ivan', 'Toney', 22, 'Delantero', 'Al-Ahli', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Marc', 'Guéhi', 24, 'Defensor', 'Crystal Palace', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Dean', 'Henderson', 25, 'Portero', 'Crystal Palace', 30, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Luke', 'Shaw', 19, 'Defensor', 'Manchester United', 29, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'ENG'), 'Trent', 'Alexander-Arnold', 26, 'Defensor', 'Liverpool', 25, false)
+ON CONFLICT DO NOTHING;
+
+-- CROATIA (46)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Dominik', 'Livaković', 1, 'Portero', 'Fenerbahçe', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Ivica', 'Ivušić', 12, 'Portero', 'Pisa', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Nediljko', 'Labrović', 23, 'Portero', 'Rijeka', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Joško', 'Gvardiol', 2, 'Defensor', 'Manchester City', 22, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Marin', 'Pongračić', 3, 'Defensor', 'Fiorentina', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Martin', 'Erd', 4, 'Defensor', 'Bayer Leverkusen', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Bruno', 'Petković', 5, 'Defensor', 'Dinamo Zagreb', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Josip', 'Juranović', 13, 'Defensor', 'Union Berlin', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Martin', 'Baturina', 14, 'Defensor', 'Dinamo Zagreb', 21, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Mateo', 'Kovačić', 6, 'Centrocampista', 'Manchester City', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Luka', 'Modrić', 8, 'Centrocampista', 'Real Madrid', 38, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Andrej', 'Kramarić', 10, 'Centrocampista', 'Hoffenheim', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Mario', 'Pašalić', 15, 'Centrocampista', 'Atalanta', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Lovro', 'Majer', 7, 'Delantero', 'Wolfsburg', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Ivan', 'Perišić', 9, 'Delantero', 'PSV', 35, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Ante', 'Budimir', 11, 'Delantero', 'Osasuna', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Marco', 'Pasalić', 18, 'Delantero', 'Rijeka', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Luka', 'Sucić', 17, 'Delantero', 'Red Bull Salzburg', 21, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Nikola', 'Vlašić', 16, 'Centrocampista', 'Torino', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Marcelo', 'Brozović', 20, 'Centrocampista', 'Al-Nassr', 31, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Luka', 'Ivanušec', 21, 'Centrocampista', 'Feyenoord', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Dario', 'Serber', 22, 'Delantero', 'Standard Liège', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Duje', 'Ćaleta-Car', 24, 'Defensor', 'Lyon', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Dominik', 'Kotarski', 26, 'Portero', 'Dinamo Zagreb', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Borna', 'Sosa', 19, 'Defensor', 'Torino', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CRO'), 'Lovro', 'Klein', 25, 'Defensor', 'Dinamo Zagreb', 24, false)
+ON CONFLICT DO NOTHING;
+
+-- GHANA (47)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Richard', 'Ofori', 1, 'Portero', 'Sekhukhune United', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Lawrence', 'Ati-Zigi', 12, 'Portero', 'St. Gallen', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Ibrahim', 'Danlad', 23, 'Portero', 'Asante Kotoko', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Denis', 'Odoi', 2, 'Defensor', 'Club Brujas', 35, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Alexander', 'Djiku', 3, 'Defensor', 'Fenerbahçe', 29, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Jonathan', 'Mensah', 4, 'Defensor', 'New England Revolution', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Baba', 'Rahman', 5, 'Defensor', 'PAOK', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Gideon', 'Mensah', 13, 'Defensor', 'Nantes', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Alidu', 'Seidu', 14, 'Defensor', 'Rodez', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Thomas', 'Partey', 6, 'Centrocampista', 'Arsenal', 31, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Mohammed', 'Kudus', 8, 'Centrocampista', 'West Ham', 23, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'André', 'Ayew', 10, 'Centrocampista', 'Le Havre', 34, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Elisha', 'Owusu', 15, 'Centrocampista', 'Genk', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Joseph', 'Paintsil', 7, 'Delantero', 'LA Galaxy', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Jordan', 'Ayew', 9, 'Delantero', 'Crystal Palace', 32, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Osman', 'Bukari', 11, 'Delantero', 'Crvena Zvezda', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Antoine', 'Semenyo', 18, 'Delantero', 'Bournemouth', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Kamal', 'Sowah', 17, 'Delantero', 'Boavista', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Salis', 'Abdul Samed', 16, 'Centrocampista', 'Lens', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Daniel', 'Kofi Kyereh', 20, 'Centrocampista', 'Freiburg', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Brandon', 'Thomas-Asante', 21, 'Delantero', 'West Bromwich', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Francis', 'Cofie', 22, 'Delantero', 'Hearts of Oak', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Fatawu', 'Issahaku', 24, 'Centrocampista', 'Sporting', 20, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Frederick', 'Asare', 26, 'Portero', 'Hearts of Oak', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Ebenezer', 'Akwasi', 19, 'Defensor', 'Asante Kotoko', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'GHA'), 'Rashid', 'Alhassan', 25, 'Centrocampista', 'New Edubiase', 26, false)
+ON CONFLICT DO NOTHING;
+
+-- PANAMA (48)
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Luis', 'Mejía', 1, 'Portero', 'Sporting San Miguelito', 30, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'José', 'González', 12, 'Portero', 'Universidad Católica', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Marcos', 'Machado', 23, 'Portero', 'Tauro', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Michael', 'Amir Murillo', 2, 'Defensor', 'Marseille', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Harold', 'Cummings', 3, 'Defensor', 'Sporting San Miguelito', 33, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Carlos', 'Rodríguez', 4, 'Defensor', 'Universidad Católica', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Edgardo', 'Fariña', 5, 'Defensor', 'Independiente', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Jorge', 'Gutiérrez', 13, 'Defensor', 'Tauro', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Roderick', 'Miller', 14, 'Defensor', 'Sporting San Miguelito', 32, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Adalberto', 'Carrasquilla', 6, 'Centrocampista', 'Deportivo Pasto', 26, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'José', 'Luis Rodríguez', 8, 'Centrocampista', 'Independiente', 25, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Alberto', 'Quintero', 10, 'Centrocampista', 'Universitario', 37, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Freddy', 'Góndola', 15, 'Centrocampista', 'Tauro', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Ismael', 'Díaz', 7, 'Delantero', 'Universidad Católica', 28, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Gabriel', 'Torres', 9, 'Delantero', 'Sporting San Miguelito', 35, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Abdiel', 'Arroyo', 11, 'Delantero', 'Real Cartagena', 27, true),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Jorman', 'Aguilar', 18, 'Delantero', 'Tauro', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Amaro', 'Díaz', 17, 'Delantero', 'Sporting San Miguelito', 23, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Alan', 'Córdoba', 16, 'Centrocampista', 'Universitario', 27, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Edgar', 'Bárcenas', 20, 'Centrocampista', 'Mazatlán', 29, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Cecilio', 'Waterman', 21, 'Delantero', 'Sporting San Miguelito', 25, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Ricardo', 'Phillips', 22, 'Delantero', 'Tauro', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'José', 'Fajardo', 24, 'Delantero', 'Universitario', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Saúl', 'Menéndez', 26, 'Portero', 'Independiente', 28, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'José', 'Murillo', 19, 'Defensor', 'Sporting San Miguelito', 26, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'PAN'), 'Víctor', 'Griffiths', 25, 'Centrocampista', 'Tauro', 23, false)
+ON CONFLICT DO NOTHING;
+
+-- =============================================
+-- GENERATE ALL CROMOS (1248 normal + 48 especial + 48 dorado + 48 seleccion = 1392 TOTAL)
+-- =============================================
+
+-- Normal cromos (1 per player = 1248)
+INSERT INTO cromos (jugador_id, seleccion_id, tipo, numero_cromo, imagen_url, rareza)
+SELECT 
+  j.id as jugador_id,
+  j.seleccion_id,
+  'normal' as tipo,
+  ROW_NUMBER() OVER (ORDER BY j.seleccion_id, j.id) as numero_cromo,
+  '' as imagen_url,
+  1 as rareza
+FROM jugadores j
+ON CONFLICT (jugador_id) DO NOTHING;
+
+-- Especial cromos (1 per starting player = approximately 48)
+INSERT INTO cromos (jugador_id, seleccion_id, tipo, numero_cromo, imagen_url, rareza)
+SELECT 
+  j.id as jugador_id,
+  j.seleccion_id,
+  'especial' as tipo,
+  500 + ROW_NUMBER() OVER (ORDER BY j.seleccion_id) as numero_cromo,
+  '' as imagen_url,
+  3 as rareza
+FROM jugadores j
+WHERE j.es_titular = true
+ON CONFLICT (jugador_id) DO NOTHING;
+
+-- Dorado cromos (1 per selection = 48)
+INSERT INTO cromos (jugador_id, seleccion_id, tipo, numero_cromo, imagen_url, rareza)
+SELECT 
+  (SELECT j.id FROM jugadores j WHERE j.seleccion_id = s.id AND j.es_titular = true LIMIT 1) as jugador_id,
+  s.id as seleccion_id,
+  'dorado' as tipo,
+  900 + ROW_NUMBER() OVER (ORDER BY s.id) as numero_cromo,
+  '' as imagen_url,
+  5 as rareza
+FROM selecciones s
+ON CONFLICT DO NOTHING;
+
+-- Seleccion cromos (1 per selection = 48)
+INSERT INTO cromos (jugador_id, seleccion_id, tipo, numero_cromo, imagen_url, rareza)
+SELECT 
+  NULL,
+  id as seleccion_id,
+  'seleccion' as tipo,
+  1200 + ROW_NUMBER() OVER (ORDER BY id) as numero_cromo,
+  '' as imagen_url,
+  2 as rareza
+FROM selecciones
+ON CONFLICT DO NOTHING;
+
+-- Verify totals
+SELECT tipo, COUNT(*) as cantidad FROM cromos GROUP BY tipo;

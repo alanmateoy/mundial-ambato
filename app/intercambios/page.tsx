@@ -26,6 +26,8 @@ export default function IntercambiosPage() {
   const [cromoBuscado, setCromoBuscado] = useState('')
   const [ubicacion, setUbicacion] = useState('Ambato')
   const [notas, setNotas] = useState('')
+  const [loadingIntercambios, setLoadingIntercambios] = useState(true)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     checkUser()
@@ -51,8 +53,13 @@ export default function IntercambiosPage() {
   }
 
   const loadIntercambios = async () => {
-    if (!supabase) return
-    const { data } = await supabase
+    if (!supabase) {
+      setLoadingIntercambios(false)
+      return
+    }
+    setLoadingIntercambios(true)
+    setError('')
+    const { data, error: err } = await supabase
       .from('intercambios')
       .select(`
         id, usuario_ofrece_id, cromo_ofrecido_id, cromo_buscado_id, estado, ubicacion, notas,
@@ -62,28 +69,50 @@ export default function IntercambiosPage() {
       `)
       .eq('estado', 'abierto')
       .order('created_at', { ascending: false })
-    if (data) setIntercambios(data as any[])
+
+    if (err) {
+      setError('Error cargando intercambios: ' + err.message)
+      console.error(err)
+    } else if (data) {
+      setIntercambios(data as any[])
+    }
+    setLoadingIntercambios(false)
   }
 
   const crearIntercambio = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!user || !cromoOfrecido || !cromoBuscado) return
+    setError('')
+
+    if (!user || !cromoOfrecido || !cromoBuscado) {
+      setError('Debes seleccionar ambos cromos')
+      return
+    }
+
     if (!supabase) return
+
+    const cromoBuscadoNum = parseInt(cromoBuscado)
+    if (isNaN(cromoBuscadoNum) || cromoBuscadoNum < 1 || cromoBuscadoNum > 980) {
+      setError('El número de cromo debe estar entre 1 y 980')
+      return
+    }
 
     const { error } = await supabase.from('intercambios').insert({
       usuario_ofrece_id: user.id,
       cromo_ofrecido_id: parseInt(cromoOfrecido),
-      cromo_buscado_id: parseInt(cromoBuscado),
+      cromo_buscado_id: cromoBuscadoNum,
       ubicacion,
       notas,
       estado: 'abierto'
     })
 
-    if (!error) {
+    if (error) {
+      setError('Error al crear intercambio: ' + error.message)
+    } else {
       setMostrarForm(false)
       setCromoOfrecido('')
       setCromoBuscado('')
       setNotas('')
+      setError('')
       loadIntercambios()
     }
   }
@@ -110,7 +139,13 @@ export default function IntercambiosPage() {
           {mostrarForm && (
             <form onSubmit={crearIntercambio} className="mt-4 bg-white/10 backdrop-blur rounded-xl p-6 space-y-4">
               <h2 className="text-2xl font-bold mb-4">Nueva oferta de intercambio</h2>
-              
+
+              {error && (
+                <div className="bg-red-500/20 border border-red-400 text-red-200 p-3 rounded-lg">
+                  {error}
+                </div>
+              )}
+
               <div>
                 <label className="block mb-2">Tu cromo repetido (que ofreces):</label>
                 <select
@@ -169,6 +204,11 @@ export default function IntercambiosPage() {
           )}
         </div>
 
+        {loadingIntercambios ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mundial-gold"></div>
+          </div>
+        ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {intercambios.filter((i: Intercambio) => i.usuario_ofrece_id !== user?.id).map((inter: Intercambio) => (
             <div key={inter.id} className="mundial-card p-6">
@@ -211,10 +251,12 @@ export default function IntercambiosPage() {
           ))}
         </div>
 
-        {intercambios.filter((i: Intercambio) => i.usuario_ofrece_id !== user?.id).length === 0 && (
+        {intercambios.filter((i: Intercambio) => i.usuario_ofrece_id !== user?.id).length === 0 && !loadingIntercambios && (
           <p className="text-center text-white/60 mt-8">
             No hay ofertas de intercambio disponibles en este momento.
           </p>
+        )}
+        </div>
         )}
       </div>
     </main>
