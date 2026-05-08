@@ -3,7 +3,8 @@
     "allow": [
       "Bash(git add *)",
       "Bash(git commit -m 'Fix: Correcciones críticas de Supabase y mejoras de UX *)",
-      "Bash(git commit -m 'docs: Añadir reporte de análisis y mejoras recomendadas *)"
+      "Bash(git commit -m 'docs: Añadir reporte de análisis y mejoras recomendadas *)",
+      "Bash(git commit -m 'docs: Crear prompt educativo completo para cargar BD en Supabase *)"
     ]
   }
 }
