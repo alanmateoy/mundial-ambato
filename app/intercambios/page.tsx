@@ -320,9 +320,9 @@ export default function IntercambiosPage() {
                   </div>
 
                   {/* Ofrece */}
-                  <div className="mb-3 p-3 rounded-xl bg-gradient-to-r from-mundial-green/10 to-emerald-700/5 border border-mundial-green/20">
-                    <div className="text-[10px] font-bold text-mundial-green-light uppercase tracking-widest mb-1">
-                      Ofrece
+                  <div className="mb-3 p-3 rounded-xl bg-gradient-to-r from-mundial-cyan/15 to-blue-700/10 border border-mundial-cyan/30">
+                    <div className="text-[10px] font-bold text-mundial-cyan uppercase tracking-widest mb-1">
+                      ✨ Ofrece
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-sm">
@@ -342,9 +342,9 @@ export default function IntercambiosPage() {
                   </div>
 
                   {/* Busca */}
-                  <div className="mb-4 p-3 rounded-xl bg-gradient-to-r from-mundial-gold/10 to-amber-700/5 border border-mundial-gold/20">
-                    <div className="text-[10px] font-bold text-mundial-gold-light uppercase tracking-widest mb-1">
-                      Busca
+                  <div className="mb-4 p-3 rounded-xl bg-gradient-to-r from-mundial-purple/15 to-fuchsia-700/10 border border-mundial-purple/30">
+                    <div className="text-[10px] font-bold text-purple-300 uppercase tracking-widest mb-1">
+                      🎯 Busca
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-sm">

@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { Seleccion, Jugador } from '@/lib/types'
-import { BANDERAS_POR_CODIGO, CONFEDERACION_COLORES, LIMIT_SELECCIONES } from '@/lib/constants'
+import { BANDERAS_POR_CODIGO, CONFEDERACION_COLORES, LIMIT_SELECCIONES, LIMIT_JUGADORES } from '@/lib/constants'
 
 const CONFEDERACIONES = [
   { id: 'todas', label: 'Todas', icon: '🌍', color: 'from-mundial-green to-mundial-cyan' },
@@ -68,10 +68,15 @@ export default function CatalogoPage() {
       .select('*')
       .eq('seleccion_id', seleccion.id)
       .order('es_titular', { ascending: false })
-      .order('posicion', { ascending: true })
+      .limit(LIMIT_JUGADORES)
 
     if (!error && data) {
-      setModalJugadores(data)
+      // Ordenar en cliente por posición
+      const jugadoresOrdenados = data.sort((a, b) => {
+        const posiciones = { 'Portero': 0, 'Defensor': 1, 'Centrocampista': 2, 'Delantero': 3 }
+        return (posiciones[a.posicion as keyof typeof posiciones] || 999) - (posiciones[b.posicion as keyof typeof posiciones] || 999)
+      })
+      setModalJugadores(jugadoresOrdenados as Jugador[])
     }
     setModalLoading(false)
   }, [])

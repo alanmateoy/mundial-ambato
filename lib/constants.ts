@@ -9,14 +9,14 @@ export const CROMOS_MUSEO = 11
 export const CROMOS_EQUIPOS = 960
 export const CROMOS_POR_EQUIPO = 20
 
-// Colores por confederación (Tailwind)
+// Colores por confederación (Tailwind Premium)
 export const CONFEDERACION_COLORES: Record<string, { bg: string; text: string }> = {
-  'CONCACAF': { bg: 'bg-green-100', text: 'text-green-800' },
-  'CONMEBOL': { bg: 'bg-yellow-100', text: 'text-yellow-800' },
-  'UEFA': { bg: 'bg-blue-100', text: 'text-blue-800' },
-  'AFC': { bg: 'bg-orange-100', text: 'text-orange-800' },
-  'CAF': { bg: 'bg-red-100', text: 'text-red-800' },
-  'OFC': { bg: 'bg-purple-100', text: 'text-purple-800' },
+  'CONCACAF': { bg: 'bg-mundial-green/10', text: 'text-mundial-green-light' },
+  'CONMEBOL': { bg: 'bg-mundial-gold/10', text: 'text-mundial-gold-light' },
+  'UEFA': { bg: 'bg-mundial-cyan/10', text: 'text-mundial-cyan' },
+  'AFC': { bg: 'bg-red-500/10', text: 'text-red-300' },
+  'CAF': { bg: 'bg-orange-500/10', text: 'text-orange-300' },
+  'OFC': { bg: 'bg-mundial-purple/10', text: 'text-purple-300' },
 }
 
 // Mapeo de banderas por código FIFA (emoji)
