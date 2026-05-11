@@ -1,17 +1,9 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
-
-interface Seleccion {
-  id: number
-  nombre: string
-  confederacion: string
-  codigo_fifa: string
-  grupo: string
-  ranking_fifa: number
-  participaciones: number
-}
+import { Seleccion, Jugador } from '@/lib/types'
+import { BANDERAS_POR_CODIGO, CONFEDERACION_COLORES, LIMIT_SELECCIONES } from '@/lib/constants'
 
 const CONFEDERACIONES = [
   { id: 'todas', label: 'Todas', icon: '🌍', color: 'from-mundial-green to-mundial-cyan' },
@@ -24,26 +16,8 @@ const CONFEDERACIONES = [
 ]
 
 const FALLBACK_SELECCIONES: Seleccion[] = [
-  { id: 1, nombre: 'México', confederacion: 'CONCACAF', codigo_fifa: 'MEX', grupo: 'A', ranking_fifa: 15, participaciones: 17 },
-  { id: 2, nombre: 'Brasil', confederacion: 'CONMEBOL', codigo_fifa: 'BRA', grupo: 'C', ranking_fifa: 5, participaciones: 22 },
-  { id: 3, nombre: 'Argentina', confederacion: 'CONMEBOL', codigo_fifa: 'ARG', grupo: 'J', ranking_fifa: 1, participaciones: 18 },
-  { id: 4, nombre: 'España', confederacion: 'UEFA', codigo_fifa: 'ESP', grupo: 'H', ranking_fifa: 2, participaciones: 16 },
-  { id: 5, nombre: 'Francia', confederacion: 'UEFA', codigo_fifa: 'FRA', grupo: 'I', ranking_fifa: 4, participaciones: 16 },
-  { id: 6, nombre: 'Alemania', confederacion: 'UEFA', codigo_fifa: 'GER', grupo: 'E', ranking_fifa: 3, participaciones: 20 },
-  { id: 7, nombre: 'Portugal', confederacion: 'UEFA', codigo_fifa: 'POR', grupo: 'K', ranking_fifa: 7, participaciones: 8 },
-  { id: 8, nombre: 'Inglaterra', confederacion: 'UEFA', codigo_fifa: 'ENG', grupo: 'L', ranking_fifa: 4, participaciones: 16 },
-  { id: 9, nombre: 'Bélgica', confederacion: 'UEFA', codigo_fifa: 'BEL', grupo: 'G', ranking_fifa: 8, participaciones: 14 },
-  { id: 10, nombre: 'Países Bajos', confederacion: 'UEFA', codigo_fifa: 'NED', grupo: 'F', ranking_fifa: 6, participaciones: 11 },
-  { id: 11, nombre: 'Italia', confederacion: 'UEFA', codigo_fifa: 'ITA', grupo: '-', ranking_fifa: 10, participaciones: 18 },
-  { id: 12, nombre: 'Croacia', confederacion: 'UEFA', codigo_fifa: 'CRO', grupo: 'L', ranking_fifa: 11, participaciones: 6 },
-  { id: 13, nombre: 'Uruguay', confederacion: 'CONMEBOL', codigo_fifa: 'URU', grupo: 'H', ranking_fifa: 14, participaciones: 14 },
-  { id: 14, nombre: 'Ecuador', confederacion: 'CONMEBOL', codigo_fifa: 'ECU', grupo: 'E', ranking_fifa: 31, participaciones: 4 },
-  { id: 15, nombre: 'Estados Unidos', confederacion: 'CONCACAF', codigo_fifa: 'USA', grupo: 'D', ranking_fifa: 16, participaciones: 11 },
-  { id: 16, nombre: 'Canadá', confederacion: 'CONCACAF', codigo_fifa: 'CAN', grupo: 'B', ranking_fifa: 28, participaciones: 3 },
-  { id: 17, nombre: 'Marruecos', confederacion: 'CAF', codigo_fifa: 'MAR', grupo: 'C', ranking_fifa: 12, participaciones: 6 },
-  { id: 18, nombre: 'Senegal', confederacion: 'CAF', codigo_fifa: 'SEN', grupo: 'I', ranking_fifa: 18, participaciones: 4 },
-  { id: 19, nombre: 'Japón', confederacion: 'AFC', codigo_fifa: 'JPN', grupo: 'F', ranking_fifa: 18, participaciones: 7 },
-  { id: 20, nombre: 'Corea del Sur', confederacion: 'AFC', codigo_fifa: 'KOR', grupo: 'A', ranking_fifa: 23, participaciones: 11 },
+  { id: 1, nombre: 'México', confederacion: 'CONCACAF', codigo_fifa: 'MEX', grupo: 'A', ranking_fifa: 15, participaciones: 17, mejor_resultado: 'Cuartos (1970, 1986)' },
+  { id: 2, nombre: 'Brasil', confederacion: 'CONMEBOL', codigo_fifa: 'BRA', grupo: 'C', ranking_fifa: 5, participaciones: 22, mejor_resultado: 'Campeón (1958, 1962, 1970, 1994, 2002)' },
 ]
 
 export default function CatalogoPage() {
@@ -52,12 +26,16 @@ export default function CatalogoPage() {
   const [confederacion, setConfederacion] = useState('todas')
   const [loading, setLoading] = useState(true)
   const [usingFallback, setUsingFallback] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalSeleccion, setModalSeleccion] = useState<Seleccion | null>(null)
+  const [modalJugadores, setModalJugadores] = useState<Jugador[]>([])
+  const [modalLoading, setModalLoading] = useState(false)
 
   useEffect(() => {
     loadSelecciones()
   }, [])
 
-  const loadSelecciones = async () => {
+  const loadSelecciones = useCallback(async () => {
     if (!supabase) {
       setSelecciones(FALLBACK_SELECCIONES)
       setUsingFallback(true)
@@ -68,7 +46,8 @@ export default function CatalogoPage() {
     const { data, error } = await supabase
       .from('selecciones')
       .select('*')
-      .order('ranking_fifa', { ascending: true })
+      .order('orden_album', { ascending: true })
+      .limit(LIMIT_SELECCIONES)
 
     if (error || !data || data.length === 0) {
       console.warn('Usando datos de demo:', error?.message)
@@ -78,6 +57,35 @@ export default function CatalogoPage() {
       setSelecciones(data)
     }
     setLoading(false)
+  }, [])
+
+  const loadJugadores = useCallback(async (seleccion: Seleccion) => {
+    if (!supabase) return
+
+    setModalLoading(true)
+    const { data, error } = await supabase
+      .from('jugadores')
+      .select('*')
+      .eq('seleccion_id', seleccion.id)
+      .order('es_titular', { ascending: false })
+      .order('posicion', { ascending: true })
+
+    if (!error && data) {
+      setModalJugadores(data)
+    }
+    setModalLoading(false)
+  }, [])
+
+  const abrirModal = (sel: Seleccion) => {
+    setModalSeleccion(sel)
+    setModalOpen(true)
+    loadJugadores(sel)
+  }
+
+  const cerrarModal = () => {
+    setModalOpen(false)
+    setModalSeleccion(null)
+    setModalJugadores([])
   }
 
   const seleccionesFiltradas = selecciones.filter((s) => {
@@ -87,32 +95,11 @@ export default function CatalogoPage() {
   })
 
   const getConfBadge = (conf: string) => {
-    const map: Record<string, string> = {
-      CONCACAF: 'badge-green',
-      CONMEBOL: 'badge-gold',
-      UEFA: 'badge-cyan',
-      AFC: 'badge-purple',
-      CAF: 'badge-gold',
-      OFC: 'badge-purple',
-    }
-    return map[conf] || 'badge-cyan'
+    const colors = CONFEDERACION_COLORES[conf]
+    return colors ? `${colors.bg} ${colors.text}` : 'badge-cyan'
   }
 
-  const getFlag = (codigo: string) => {
-    const flags: Record<string, string> = {
-      MEX: '🇲🇽', BRA: '🇧🇷', ARG: '🇦🇷', ESP: '🇪🇸', FRA: '🇫🇷',
-      GER: '🇩🇪', POR: '🇵🇹', ENG: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', BEL: '🇧🇪', NED: '🇳🇱',
-      ITA: '🇮🇹', CRO: '🇭🇷', URU: '🇺🇾', ECU: '🇪🇨', USA: '🇺🇸',
-      CAN: '🇨🇦', MAR: '🇲🇦', SEN: '🇸🇳', JPN: '🇯🇵', KOR: '🇰🇷',
-      RSA: '🇿🇦', CZE: '🇨🇿', BIH: '🇧🇦', QAT: '🇶🇦', SUI: '🇨🇭',
-      HAI: '🇭🇹', SCO: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', PAR: '🇵🇾', AUS: '🇦🇺', TUR: '🇹🇷',
-      CUW: '🇨🇼', CIV: '🇨🇮', TUN: '🇹🇳', SWE: '🇸🇪', EGY: '🇪🇬',
-      IRN: '🇮🇷', NZL: '🇳🇿', CPV: '🇨🇻', KSA: '🇸🇦', IRQ: '🇮🇶',
-      NOR: '🇳🇴', ALG: '🇩🇿', AUT: '🇦🇹', JOR: '🇯🇴', COD: '🇨🇩',
-      UZB: '🇺🇿', COL: '🇨🇴', GHA: '🇬🇭', PAN: '🇵🇦',
-    }
-    return flags[codigo] || '⚽'
-  }
+  const getFlag = (codigo: string) => BANDERAS_POR_CODIGO[codigo] || '⚽'
 
   if (loading) {
     return (
@@ -239,7 +226,7 @@ export default function CatalogoPage() {
 
                   {/* Info */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    <span className={getConfBadge(sel.confederacion)}>
+                    <span className={`badge ${getConfBadge(sel.confederacion)}`}>
                       {sel.confederacion}
                     </span>
                     {sel.grupo && sel.grupo !== '-' && (
@@ -268,7 +255,10 @@ export default function CatalogoPage() {
                   </div>
 
                   {/* Action Footer */}
-                  <button className="w-full mt-4 py-2.5 rounded-xl text-sm font-semibold bg-white/5 hover:bg-gradient-to-r hover:from-mundial-green/20 hover:to-mundial-cyan/20 border border-white/10 hover:border-mundial-green/40 transition-all duration-300 group-hover:text-mundial-green-light">
+                  <button
+                    onClick={() => abrirModal(sel)}
+                    className="w-full mt-4 py-2.5 rounded-xl text-sm font-semibold bg-white/5 hover:bg-gradient-to-r hover:from-mundial-green/20 hover:to-mundial-cyan/20 border border-white/10 hover:border-mundial-green/40 transition-all duration-300 group-hover:text-mundial-green-light"
+                  >
                     Ver jugadores →
                   </button>
                 </article>
@@ -284,6 +274,62 @@ export default function CatalogoPage() {
           ← Volver al inicio
         </Link>
       </div>
+
+      {/* Modal de Jugadores */}
+      {modalOpen && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="glass-card max-w-2xl w-full max-h-[80vh] overflow-y-auto animate-scale-in">
+            <div className="sticky top-0 bg-mundial-dark/95 backdrop-blur px-6 py-4 border-b border-white/10 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl">{getFlag(modalSeleccion?.codigo_fifa || '')}</span>
+                <div>
+                  <h2 className="text-xl font-bold">{modalSeleccion?.nombre}</h2>
+                  <p className="text-xs text-white/40">{modalSeleccion?.codigo_fifa} • Grupo {modalSeleccion?.grupo}</p>
+                </div>
+              </div>
+              <button
+                onClick={cerrarModal}
+                className="text-white/60 hover:text-white text-2xl"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="p-6">
+              {modalLoading ? (
+                <div className="flex justify-center py-8">
+                  <div className="loader-premium"></div>
+                </div>
+              ) : modalJugadores.length === 0 ? (
+                <div className="text-center py-8 text-white/50">
+                  No hay jugadores cargados para este equipo
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {modalJugadores.map((jug) => (
+                    <div
+                      key={jug.id}
+                      className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                    >
+                      <div>
+                        <div className="font-semibold text-white">
+                          #{jug.numero} {jug.nombre} {jug.apellido}
+                        </div>
+                        <div className="text-xs text-white/50">
+                          {jug.posicion} • {jug.club} • {jug.edad} años
+                        </div>
+                      </div>
+                      {jug.es_titular && (
+                        <span className="badge-gold text-xs">⭐ Titular</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

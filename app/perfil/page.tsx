@@ -1,18 +1,13 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import type { User } from '@supabase/supabase-js'
-
-interface Perfil {
-  id: string
-  email: string
-  nombre: string
-  whatsapp: string
-  ciudad: string
-}
+import type { Perfil } from '@/lib/types'
 
 export default function PerfilPage() {
+  const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [perfil, setPerfil] = useState<Perfil | null>(null)
   const [nombre, setNombre] = useState('')
@@ -23,6 +18,7 @@ export default function PerfilPage() {
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState<'error' | 'success' | null>(null)
   const [stats, setStats] = useState({ obtenidos: 0, repetidos: 0, intercambios: 0 })
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
 
   useEffect(() => {
     loadUserAndProfile()
@@ -114,10 +110,10 @@ export default function PerfilPage() {
     setSaving(false)
   }
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     if (supabase) await supabase.auth.signOut()
-    window.location.href = '/login'
-  }
+    router.push('/login')
+  }, [router])
 
   if (loading) {
     return (
@@ -281,7 +277,7 @@ export default function PerfilPage() {
           {/* Logout */}
           <div className="mt-6 text-center animate-fade-in-up" style={{ animationDelay: '300ms' }}>
             <button
-              onClick={handleLogout}
+              onClick={() => setShowLogoutModal(true)}
               className="text-white/40 hover:text-red-400 text-sm transition-colors flex items-center gap-2 mx-auto"
             >
               <span>🚪</span>
@@ -296,6 +292,36 @@ export default function PerfilPage() {
           </div>
         </div>
       </section>
+
+      {/* Modal de confirmación de logout */}
+      {showLogoutModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="glass-card max-w-sm w-full animate-scale-in p-6">
+            <div className="text-center">
+              <div className="text-5xl mb-4">🚪</div>
+              <h2 className="text-2xl font-bold text-white mb-2">Cerrar sesión</h2>
+              <p className="text-white/60 mb-6">
+                ¿Estás seguro que quieres cerrar sesión? Volverás a la página de login.
+              </p>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowLogoutModal(false)}
+                  className="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/30 transition-all duration-300"
+                >
+                  Sí, cerrar sesión
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

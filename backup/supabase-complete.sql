@@ -188,7 +188,7 @@ ON CONFLICT DO NOTHING;
 INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'CAN'), 'Dayne', 'St. Clair', 1, 'Portero', 'Minnesota United', 27, true),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'CAN'), 'Maxime', 'Crépeau', 12, 'Portero', 'Portland Timbers', 30, false),
-((SELECT id FROM selecciones WHERE codigo_fifa = 'CAN'), 'Tom McGill', 23, 'Portero', 'Brighton', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'CAN'), 'Tom', 'McGill', 23, 'Portero', 'Brighton', 24, false),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'CAN'), 'Alistair', 'Johnston', 2, 'Defensor', 'Celtic', 26, true),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'CAN'), 'Kamal', 'Miller', 3, 'Defensor', 'Portland Timbers', 27, true),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'CAN'), 'Moïse', 'Bombito', 4, 'Defensor', 'Nice', 24, true),
@@ -297,7 +297,7 @@ INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, e
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'SUI'), 'Fabian', 'Rieder', 16, 'Centrocampista', 'Young Boys', 26, false),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'SUI'), 'Vincent', 'Sierro', 20, 'Centrocampista', 'Young Boys', 28, false),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'SUI'), 'Michel', 'Aebischer', 21, 'Centrocampista', 'Bologna', 26, false),
-((SELECT id FROM selecciones WHERE codigo_fifa = 'SUI'), 'Zeki', 'Am'douni', 22, 'Delantero', 'Burnley', 24, false),
+((SELECT id FROM selecciones WHERE codigo_fifa = 'SUI'), 'Zeki', 'Am''douni', 22, 'Delantero', 'Burnley', 24, false),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'SUI'), 'Ardon', 'Jashari', 24, 'Centrocampista', 'Young Boys', 23, false),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'SUI'), 'Leonardo', 'Bertone', 26, 'Centrocampista', 'Aarau', 27, false),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'SUI'), 'Philipp', 'Köhn', 25, 'Portero', 'Montpellier', 25, false),

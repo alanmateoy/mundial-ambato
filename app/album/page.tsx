@@ -1,8 +1,10 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import { LIMIT_SELECCIONES, BANDERAS_POR_CODIGO } from '@/lib/constants'
 import type { User } from '@supabase/supabase-js'
+import type { Seleccion } from '@/lib/types'
 
 interface AlbumStats {
   obtenidos: number
@@ -10,27 +12,88 @@ interface AlbumStats {
   porcentaje: number
 }
 
-const SECCIONES = [
-  { id: 'intro', label: 'Introducción', range: '1-9', icon: '🌟', color: 'from-mundial-gold to-amber-700', count: 9 },
-  { id: 'museo', label: 'Museo FIFA', range: '10-20', icon: '🏛️', color: 'from-purple-500 to-fuchsia-700', count: 11 },
-  { id: 'grupoA', label: 'Grupo A', range: '21-100', icon: '🔵', color: 'from-blue-500 to-blue-700', count: 80 },
-  { id: 'grupoB', label: 'Grupo B', range: '101-180', icon: '🔴', color: 'from-red-500 to-red-700', count: 80 },
-  { id: 'grupoC', label: 'Grupo C', range: '181-260', icon: '🟢', color: 'from-green-500 to-green-700', count: 80 },
-  { id: 'grupoD', label: 'Grupo D', range: '261-340', icon: '🟡', color: 'from-yellow-500 to-amber-700', count: 80 },
-  { id: 'grupoE', label: 'Grupo E', range: '341-420', icon: '🟣', color: 'from-purple-500 to-purple-700', count: 80 },
-  { id: 'grupoF', label: 'Grupo F', range: '421-500', icon: '🟠', color: 'from-orange-500 to-orange-700', count: 80 },
-  { id: 'grupoG', label: 'Grupo G', range: '501-580', icon: '🔷', color: 'from-cyan-500 to-cyan-700', count: 80 },
-  { id: 'grupoH', label: 'Grupo H', range: '581-660', icon: '🟦', color: 'from-indigo-500 to-indigo-700', count: 80 },
-  { id: 'grupoI', label: 'Grupo I', range: '661-740', icon: '🔶', color: 'from-rose-500 to-rose-700', count: 80 },
-  { id: 'grupoJ', label: 'Grupo J', range: '741-820', icon: '⬛', color: 'from-gray-500 to-gray-700', count: 80 },
-  { id: 'grupoK', label: 'Grupo K', range: '821-900', icon: '🟫', color: 'from-amber-700 to-amber-900', count: 80 },
-  { id: 'grupoL', label: 'Grupo L', range: '901-980', icon: '⬜', color: 'from-slate-400 to-slate-700', count: 80 },
-]
+interface SeccionAlbum {
+  id: string
+  label: string
+  range: string
+  icon: string
+  color: string
+  count: number
+  equipos?: Seleccion[]
+}
+
+const GRUPO_COLORES: Record<string, string> = {
+  'A': 'from-blue-500 to-blue-700',
+  'B': 'from-red-500 to-red-700',
+  'C': 'from-green-500 to-green-700',
+  'D': 'from-yellow-500 to-amber-700',
+  'E': 'from-purple-500 to-purple-700',
+  'F': 'from-orange-500 to-orange-700',
+  'G': 'from-cyan-500 to-cyan-700',
+  'H': 'from-indigo-500 to-indigo-700',
+  'I': 'from-rose-500 to-rose-700',
+  'J': 'from-gray-500 to-gray-700',
+  'K': 'from-amber-700 to-amber-900',
+  'L': 'from-slate-400 to-slate-700',
+}
+
+const GRUPO_ICONOS: Record<string, string> = {
+  'A': '🔵', 'B': '🔴', 'C': '🟢', 'D': '🟡',
+  'E': '🟣', 'F': '🟠', 'G': '🔷', 'H': '🟦',
+  'I': '🔶', 'J': '⬛', 'K': '🟫', 'L': '⬜',
+}
 
 export default function AlbumPage() {
   const [user, setUser] = useState<User | null>(null)
   const [stats, setStats] = useState<AlbumStats>({ obtenidos: 0, total: 980, porcentaje: 0 })
+  const [secciones, setSecciones] = useState<SeccionAlbum[]>([])
   const [loading, setLoading] = useState(true)
+
+  const loadSelecciones = useCallback(async () => {
+    if (!supabase) return
+
+    const { data: selecciones } = await supabase
+      .from('selecciones')
+      .select('*')
+      .order('orden_album', { ascending: true })
+      .limit(LIMIT_SELECCIONES)
+
+    if (selecciones) {
+      const gruposMap = new Map<string, Seleccion[]>()
+      selecciones.forEach((sel) => {
+        const grupo = sel.grupo || '-'
+        if (!gruposMap.has(grupo)) {
+          gruposMap.set(grupo, [])
+        }
+        gruposMap.get(grupo)!.push(sel)
+      })
+
+      const nuevasSecciones: SeccionAlbum[] = [
+        { id: 'intro', label: 'Introducción', range: '1-9', icon: '🌟', color: 'from-mundial-gold to-amber-700', count: 9 },
+        { id: 'museo', label: 'Museo FIFA', range: '10-20', icon: '🏛️', color: 'from-purple-500 to-fuchsia-700', count: 11 },
+      ]
+
+      let cromoStart = 21
+      Array.from(gruposMap.entries())
+        .sort(([grupoA], [grupoB]) => grupoA.localeCompare(grupoB))
+        .forEach(([grupo, equipos]) => {
+          const count = equipos.length * 20
+          const cromoEnd = cromoStart + count - 1
+          nuevasSecciones.push({
+            id: `grupo${grupo}`,
+            label: `Grupo ${grupo}`,
+            range: `${cromoStart}-${cromoEnd}`,
+            icon: GRUPO_ICONOS[grupo] || '⚽',
+            color: GRUPO_COLORES[grupo] || 'from-slate-500 to-slate-700',
+            count,
+            equipos,
+          })
+          cromoStart = cromoEnd + 1
+        })
+
+      setSecciones(nuevasSecciones)
+    }
+  }, [])
 
   useEffect(() => {
     const init = async () => {
@@ -44,6 +107,9 @@ export default function AlbumPage() {
         return
       }
       setUser(user)
+
+      await loadSelecciones()
+
       const { data } = await supabase
         .from('usuario_cromos')
         .select('estado')
@@ -59,7 +125,7 @@ export default function AlbumPage() {
       setLoading(false)
     }
     init()
-  }, [])
+  }, [loadSelecciones])
 
   if (loading) {
     return (
@@ -216,11 +282,12 @@ export default function AlbumPage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
-            {SECCIONES.map((sec, i) => (
+            {secciones.map((sec, i) => (
               <button
                 key={sec.id}
                 className="group glass-card-hover p-4 text-left animate-fade-in-up"
                 style={{ animationDelay: `${Math.min(i * 30, 400)}ms` }}
+                title={sec.equipos ? sec.equipos.map((e) => e.nombre).join(', ') : undefined}
               >
                 <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${sec.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-lg`}>
                   <span className="text-lg">{sec.icon}</span>
@@ -234,6 +301,11 @@ export default function AlbumPage() {
                 <div className="text-[10px] text-white/60 mt-1">
                   {sec.count} cromos
                 </div>
+                {sec.equipos && (
+                  <div className="text-[8px] text-white/40 mt-2 truncate">
+                    {sec.equipos.length} equipo{sec.equipos.length !== 1 ? 's' : ''}
+                  </div>
+                )}
               </button>
             ))}
           </div>

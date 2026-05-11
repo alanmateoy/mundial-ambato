@@ -1,8 +1,9 @@
 'use client'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { EMAIL_REGEX, PASSWORD_MIN_LENGTH } from '@/lib/constants'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -12,15 +13,65 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState<'error' | 'success' | null>(null)
+  const [failedAttempts, setFailedAttempts] = useState(0)
+  const [blockedUntil, setBlockedUntil] = useState<number | null>(null)
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const router = useRouter()
 
-  const handleAuth = async (e: React.FormEvent) => {
+  const validateEmail = (email: string): boolean => {
+    if (!EMAIL_REGEX.test(email)) {
+      setEmailError('Por favor ingresa un correo válido')
+      return false
+    }
+    setEmailError('')
+    return true
+  }
+
+  const validatePassword = (password: string): boolean => {
+    if (password.length < PASSWORD_MIN_LENGTH) {
+      setPasswordError(`Mínimo ${PASSWORD_MIN_LENGTH} caracteres`)
+      return false
+    }
+    if (!/[A-Z]/.test(password)) {
+      setPasswordError('Debe incluir una mayúscula')
+      return false
+    }
+    if (!/[0-9]/.test(password)) {
+      setPasswordError('Debe incluir un número')
+      return false
+    }
+    setPasswordError('')
+    return true
+  }
+
+  const handleAuth = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
     if (!supabase) {
       setMessage('Error: Supabase no configurado')
       setMessageType('error')
       return
     }
+
+    // Check rate limit
+    if (blockedUntil && Date.now() < blockedUntil) {
+      const secondsLeft = Math.ceil((blockedUntil - Date.now()) / 1000)
+      setMessage(`Demasiados intentos. Intenta en ${secondsLeft}s`)
+      setMessageType('error')
+      return
+    }
+
+    // Reset block if time has passed
+    if (blockedUntil && Date.now() >= blockedUntil) {
+      setBlockedUntil(null)
+      setFailedAttempts(0)
+    }
+
+    // Validate inputs
+    if (!validateEmail(email) || !validatePassword(password)) {
+      return
+    }
+
     setLoading(true)
     setMessage('')
     setMessageType(null)
@@ -28,12 +79,29 @@ export default function LoginPage() {
     if (isLogin) {
       const { error } = await supabase.auth.signInWithPassword({ email, password })
       if (error) {
-        setMessage(error.message)
+        const newAttempts = failedAttempts + 1
+        setFailedAttempts(newAttempts)
+
+        if (newAttempts >= 5) {
+          const blockTime = Date.now() + 30000
+          setBlockedUntil(blockTime)
+          setMessage('Demasiados intentos fallidos. Bloqueado por 30 segundos.')
+        } else {
+          setMessage(error.message)
+        }
         setMessageType('error')
       } else {
+        setFailedAttempts(0)
+        setBlockedUntil(null)
         router.push('/')
       }
     } else {
+      // For signup, also validate password strength
+      if (!validatePassword(password)) {
+        setLoading(false)
+        return
+      }
+
       const { error } = await supabase.auth.signUp({
         email,
         password,
@@ -47,10 +115,12 @@ export default function LoginPage() {
       } else {
         setMessage('¡Cuenta creada! Revisa tu correo para confirmar.')
         setMessageType('success')
+        setFailedAttempts(0)
+        setBlockedUntil(null)
       }
     }
     setLoading(false)
-  }
+  }, [email, password, isLogin, failedAttempts, blockedUntil])
 
   return (
     <main className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden">
@@ -154,11 +224,17 @@ export default function LoginPage() {
                   type="email"
                   placeholder="tucorreo@ejemplo.com"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="input-premium pl-12"
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    setEmailError('')
+                  }}
+                  className={`input-premium pl-12 ${emailError ? 'border-red-500/50' : ''}`}
                   required
                 />
               </div>
+              {emailError && (
+                <p className="text-xs text-red-400 mt-1">{emailError}</p>
+              )}
             </div>
 
             <div>
@@ -169,20 +245,25 @@ export default function LoginPage() {
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">🔒</span>
                 <input
                   type="password"
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder={isLogin ? 'Tu contraseña' : `Min ${PASSWORD_MIN_LENGTH} chars, 1 Mayús, 1 número`}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="input-premium pl-12"
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                    setPasswordError('')
+                  }}
+                  className={`input-premium pl-12 ${passwordError ? 'border-red-500/50' : ''}`}
                   required
-                  minLength={6}
                 />
               </div>
+              {passwordError && (
+                <p className="text-xs text-red-400 mt-1">{passwordError}</p>
+              )}
             </div>
 
             <button
               type="submit"
-              disabled={loading}
-              className="btn-primary w-full py-3.5 text-base"
+              disabled={loading || (blockedUntil !== null && Date.now() < blockedUntil)}
+              className="btn-primary w-full py-3.5 text-base disabled:opacity-50"
             >
               {loading ? (
                 <>

@@ -44,7 +44,7 @@ INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, e
 ON CONFLICT DO NOTHING;
 
 -- 2. SUDÁFRICA
-INSERT INTO jugadores (seleccion_id, nombre, apellido, numero_camiseta, posicion, club, edad, es_estrella) VALUES
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'RSA'), 'Ronwen', 'Williams', 1, 'Portero', 'Mamelodi Sundowns', 32, true),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'RSA'), 'Veli', 'Mothwa', 12, 'Portero', 'AmaZulu', 30, false),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'RSA'), 'Ricardo', 'Goss', 23, 'Portero', 'Orlando Pirates', 28, false),
@@ -74,7 +74,7 @@ INSERT INTO jugadores (seleccion_id, nombre, apellido, numero_camiseta, posicion
 ON CONFLICT DO NOTHING;
 
 -- 3. COREA DEL SUR
-INSERT INTO jugadores (seleccion_id, nombre, apellido, numero_camiseta, posicion, club, edad, es_estrella) VALUES
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'KOR'), 'Kim', 'Seung-gyu', 1, 'Portero', 'Al-Shabab', 34, true),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'KOR'), 'Jo', 'Hyeon-woo', 12, 'Portero', 'Ulsan HD', 35, false),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'KOR'), 'Song', 'Bum-keun', 23, 'Portero', 'Nottingham Forest', 26, false),
@@ -104,7 +104,7 @@ INSERT INTO jugadores (seleccion_id, nombre, apellido, numero_camiseta, posicion
 ON CONFLICT DO NOTHING;
 
 -- 4. REPÚBLICA CHECA
-INSERT INTO jugadores (seleccion_id, nombre, apellido, numero_camiseta, posicion, club, edad, es_estrella) VALUES
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'CZE'), 'Jindřich', 'Staňek', 1, 'Portero', 'Slavia Praga', 28, true),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'CZE'), 'Matěj', 'Kovář', 12, 'Portero', 'Bayer Leverkusen', 26, false),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'CZE'), 'Vít', 'Němeček', 23, 'Portero', 'Sparta Praga', 28, false),
@@ -143,7 +143,7 @@ ON CONFLICT DO NOTHING;
 -- con los campos compatibles (numero, es_titular):
 
 -- 5. CANADÁ (usar datos de supabase-complete.sql líneas 187-215)
-INSERT INTO jugadores (seleccion_id, nombre, apellido, numero_camiseta, posicion, club, edad, es_estrella) VALUES
+INSERT INTO jugadores (seleccion_id, nombre, apellido, numero, posicion, club, edad, es_titular) VALUES
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'CAN'), 'Dayne', 'St. Clair', 1, 'Portero', 'Minnesota United', 29, true),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'CAN'), 'Maxime', 'Crépeau', 12, 'Portero', 'Portland Timbers', 32, false),
 ((SELECT id FROM selecciones WHERE codigo_fifa = 'CAN'), 'James', 'Pantemis', 23, 'Portero', 'CF Montréal', 27, false),

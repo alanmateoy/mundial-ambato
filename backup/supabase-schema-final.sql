@@ -160,37 +160,50 @@ ALTER TABLE jugadores ENABLE ROW LEVEL SECURITY;
 ALTER TABLE selecciones ENABLE ROW LEVEL SECURITY;
 
 -- Políticas para PERFILES
-CREATE POLICY IF NOT EXISTS "perfiles_select_own" ON perfiles
+DROP POLICY IF EXISTS "perfiles_select_own" ON perfiles;
+CREATE POLICY "perfiles_select_own" ON perfiles
   FOR SELECT USING (auth.uid() = id);
-CREATE POLICY IF NOT EXISTS "perfiles_insert_own" ON perfiles
+DROP POLICY IF EXISTS "perfiles_insert_own" ON perfiles;
+CREATE POLICY "perfiles_insert_own" ON perfiles
   FOR INSERT WITH CHECK (auth.uid() = id);
-CREATE POLICY IF NOT EXISTS "perfiles_update_own" ON perfiles
+DROP POLICY IF EXISTS "perfiles_update_own" ON perfiles;
+CREATE POLICY "perfiles_update_own" ON perfiles
   FOR UPDATE USING (auth.uid() = id);
 
 -- Políticas para USUARIO_CROMOS
-CREATE POLICY IF NOT EXISTS "usuario_cromos_select_own" ON usuario_cromos
+DROP POLICY IF EXISTS "usuario_cromos_select_own" ON usuario_cromos;
+CREATE POLICY "usuario_cromos_select_own" ON usuario_cromos
   FOR SELECT USING (auth.uid() = usuario_id);
-CREATE POLICY IF NOT EXISTS "usuario_cromos_insert_own" ON usuario_cromos
+DROP POLICY IF EXISTS "usuario_cromos_insert_own" ON usuario_cromos;
+CREATE POLICY "usuario_cromos_insert_own" ON usuario_cromos
   FOR INSERT WITH CHECK (auth.uid() = usuario_id);
-CREATE POLICY IF NOT EXISTS "usuario_cromos_update_own" ON usuario_cromos
+DROP POLICY IF EXISTS "usuario_cromos_update_own" ON usuario_cromos;
+CREATE POLICY "usuario_cromos_update_own" ON usuario_cromos
   FOR UPDATE USING (auth.uid() = usuario_id);
-CREATE POLICY IF NOT EXISTS "usuario_cromos_delete_own" ON usuario_cromos
+DROP POLICY IF EXISTS "usuario_cromos_delete_own" ON usuario_cromos;
+CREATE POLICY "usuario_cromos_delete_own" ON usuario_cromos
   FOR DELETE USING (auth.uid() = usuario_id);
 
 -- Políticas para INTERCAMBIOS
-CREATE POLICY IF NOT EXISTS "intercambios_select_abiertos" ON intercambios
+DROP POLICY IF EXISTS "intercambios_select_abiertos" ON intercambios;
+CREATE POLICY "intercambios_select_abiertos" ON intercambios
   FOR SELECT USING (estado = 'abierto' OR auth.uid() = usuario_ofrece_id OR auth.uid() = usuario_recibe_id);
-CREATE POLICY IF NOT EXISTS "intercambios_insert_own" ON intercambios
+DROP POLICY IF EXISTS "intercambios_insert_own" ON intercambios;
+CREATE POLICY "intercambios_insert_own" ON intercambios
   FOR INSERT WITH CHECK (auth.uid() = usuario_ofrece_id);
-CREATE POLICY IF NOT EXISTS "intercambios_update_own" ON intercambios
+DROP POLICY IF EXISTS "intercambios_update_own" ON intercambios;
+CREATE POLICY "intercambios_update_own" ON intercambios
   FOR UPDATE USING (auth.uid() = usuario_ofrece_id);
 
 -- Políticas PÚBLICAS para catálogo (cualquier usuario autenticado puede leer)
-CREATE POLICY IF NOT EXISTS "cromos_select_all" ON cromos
+DROP POLICY IF EXISTS "cromos_select_all" ON cromos;
+CREATE POLICY "cromos_select_all" ON cromos
   FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "jugadores_select_all" ON jugadores
+DROP POLICY IF EXISTS "jugadores_select_all" ON jugadores;
+CREATE POLICY "jugadores_select_all" ON jugadores
   FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "selecciones_select_all" ON selecciones
+DROP POLICY IF EXISTS "selecciones_select_all" ON selecciones;
+CREATE POLICY "selecciones_select_all" ON selecciones
   FOR SELECT USING (true);
 
 -- =============================================

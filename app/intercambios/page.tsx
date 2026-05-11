@@ -1,64 +1,38 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
-
-interface Intercambio {
-  id: number
-  usuario_ofrece_id: string
-  cromo_ofrecido_id: number
-  cromo_buscado_id: number
-  estado: string
-  ubicacion: string
-  notas: string
-  perfiles: { nombre: string; whatsapp: string }
-  cromo_ofrecido: { numero_cromo: number; jugadores: { nombre: string; apellido: string } | null }
-  cromo_buscado: { numero_cromo: number; jugadores: { nombre: string; apellido: string } | null }
-}
+import { useRouter } from 'next/navigation'
+import { LIMIT_INTERCAMBIOS, LIMIT_USUARIO_CROMOS, CIUDAD_PREDETERMINADA } from '@/lib/constants'
+import type { User } from '@supabase/supabase-js'
+import type { Intercambio, UsuarioCromo } from '@/lib/types'
 
 export default function IntercambiosPage() {
-  const [user, setUser] = useState<any>(null)
+  const router = useRouter()
+  const [user, setUser] = useState<User | null>(null)
   const [intercambios, setIntercambios] = useState<Intercambio[]>([])
-  const [misCromos, setMisCromos] = useState<any[]>([])
+  const [misCromos, setMisCromos] = useState<UsuarioCromo[]>([])
   const [mostrarForm, setMostrarForm] = useState(false)
   const [cromoOfrecido, setCromoOfrecido] = useState('')
   const [cromoBuscado, setCromoBuscado] = useState('')
-  const [ubicacion, setUbicacion] = useState('Ambato')
+  const [ubicacion, setUbicacion] = useState(CIUDAD_PREDETERMINADA)
   const [notas, setNotas] = useState('')
   const [loadingInter, setLoadingInter] = useState(true)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
-  useEffect(() => {
-    checkUser()
-  }, [])
-
-  const checkUser = async () => {
-    if (!supabase) {
-      setLoadingInter(false)
-      return
-    }
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-      window.location.href = '/login'
-      return
-    }
-    setUser(user)
-    loadMisCromos(user.id)
-    loadIntercambios()
-  }
-
-  const loadMisCromos = async (userId: string) => {
+  const loadMisCromos = useCallback(async (userId: string) => {
     if (!supabase) return
     const { data } = await supabase
       .from('usuario_cromos')
       .select(`id, cromo_id, estado, cromos(numero_cromo, jugadores(nombre, apellido))`)
       .eq('usuario_id', userId)
       .eq('estado', 'repetido')
-    if (data) setMisCromos(data)
-  }
+      .limit(LIMIT_USUARIO_CROMOS)
+    if (data) setMisCromos(data as any)
+  }, [])
 
-  const loadIntercambios = async () => {
+  const loadIntercambios = useCallback(async () => {
     if (!supabase) {
       setLoadingInter(false)
       return
@@ -75,16 +49,41 @@ export default function IntercambiosPage() {
       `)
       .eq('estado', 'abierto')
       .order('created_at', { ascending: false })
+      .limit(LIMIT_INTERCAMBIOS)
 
     if (err) {
       setError('Error cargando intercambios: ' + err.message)
     } else if (data) {
-      setIntercambios(data as any[])
+      setIntercambios(data as Intercambio[])
     }
     setLoadingInter(false)
-  }
+  }, [])
 
-  const crearIntercambio = async (e: React.FormEvent) => {
+  const checkUser = useCallback(async () => {
+    if (!supabase) {
+      setLoadingInter(false)
+      return
+    }
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      router.push('/login')
+      return
+    }
+    setUser(user)
+  }, [router])
+
+  useEffect(() => {
+    checkUser()
+  }, [checkUser])
+
+  useEffect(() => {
+    if (user) {
+      loadMisCromos(user.id)
+      loadIntercambios()
+    }
+  }, [user, loadMisCromos, loadIntercambios])
+
+  const crearIntercambio = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setSuccess('')
@@ -121,7 +120,7 @@ export default function IntercambiosPage() {
       loadIntercambios()
       setTimeout(() => setSuccess(''), 3000)
     }
-  }
+  }, [user, cromoOfrecido, cromoBuscado, ubicacion, notas, loadIntercambios])
 
   if (!user && !loadingInter) return null
 

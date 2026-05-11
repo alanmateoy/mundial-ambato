@@ -4,7 +4,17 @@
       "Bash(git add *)",
       "Bash(git commit -m 'Fix: Correcciones críticas de Supabase y mejoras de UX *)",
       "Bash(git commit -m 'docs: Añadir reporte de análisis y mejoras recomendadas *)",
-      "Bash(git commit -m 'docs: Crear prompt educativo completo para cargar BD en Supabase *)"
+      "Bash(git commit -m 'docs: Crear prompt educativo completo para cargar BD en Supabase *)",
+      "PowerShell(npm run *)",
+      "Bash(git commit -m 'feat: Rediseño visual premium completo - dark mode tecnológico *)",
+      "Bash(git push *)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\proyectos\\\\mundial-ambato\" -Recurse -File | Where-Object {$_.FullName -notmatch 'node_modules' -and \\($_.Name -match 'educativo|prompt|promt'\\)} | Select-Object Name, FullName)",
+      "Bash(cat)",
+      "Bash(bash /tmp/analisis_sql.sh)",
+      "Bash(xargs echo \"  Jugadores:\")",
+      "Bash(xargs echo \"  Equipos únicos:\")",
+      "Bash(npm run *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

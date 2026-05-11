@@ -1,21 +1,10 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import { LIMIT_USUARIO_CROMOS, ESTADO_CROMO_COLORES } from '@/lib/constants'
 import type { User } from '@supabase/supabase-js'
-
-interface UsuarioCromo {
-  id: number
-  cromo_id: number
-  estado: 'obtenido' | 'repetido'
-  cromos: {
-    id: number
-    numero_cromo: number
-    tipo: string
-    jugadores: { nombre: string; apellido: string } | null
-    selecciones: { nombre: string; grupo: string } | null
-  }
-}
+import type { UsuarioCromo } from '@/lib/types'
 
 type Filtro = 'todos' | 'obtenido' | 'repetido'
 
@@ -24,6 +13,10 @@ export default function MisCromosPage() {
   const [cromos, setCromos] = useState<UsuarioCromo[]>([])
   const [filtro, setFiltro] = useState<Filtro>('todos')
   const [loading, setLoading] = useState(true)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [cromoInput, setCromoInput] = useState('')
+  const [estadoInput, setEstadoInput] = useState<'obtenido' | 'repetido'>('obtenido')
+  const [registering, setRegistering] = useState(false)
 
   useEffect(() => {
     checkUserAndLoadCromos()
@@ -43,7 +36,7 @@ export default function MisCromosPage() {
     loadCromos(user.id)
   }
 
-  const loadCromos = async (userId: string) => {
+  const loadCromos = useCallback(async (userId: string) => {
     if (!supabase) return
     const { data } = await supabase
       .from('usuario_cromos')
@@ -56,10 +49,52 @@ export default function MisCromosPage() {
         )
       `)
       .eq('usuario_id', userId)
+      .limit(LIMIT_USUARIO_CROMOS)
 
     if (data) setCromos(data as any[])
     setLoading(false)
-  }
+  }, [])
+
+  const registrarCromo = useCallback(async () => {
+    if (!user || !supabase || !cromoInput) return
+
+    const cromoNum = parseInt(cromoInput)
+    if (cromoNum < 1 || cromoNum > 980) {
+      alert('El número debe estar entre 1 y 980')
+      return
+    }
+
+    setRegistering(true)
+    const { data: cromo } = await supabase
+      .from('cromos')
+      .select('id')
+      .eq('numero_cromo', cromoNum)
+      .single()
+
+    if (!cromo) {
+      alert('Cromo no encontrado')
+      setRegistering(false)
+      return
+    }
+
+    const { error } = await supabase
+      .from('usuario_cromos')
+      .insert({
+        usuario_id: user.id,
+        cromo_id: cromo.id,
+        estado: estadoInput,
+      })
+
+    if (error) {
+      alert('Error al registrar cromo: ' + error.message)
+    } else {
+      setCromoInput('')
+      setEstadoInput('obtenido')
+      setModalOpen(false)
+      loadCromos(user.id)
+    }
+    setRegistering(false)
+  }, [user, cromoInput, estadoInput, loadCromos])
 
   const cromosFiltrados = filtro === 'todos' ? cromos : cromos.filter((c) => c.estado === filtro)
   const obtenidos = cromos.filter((c) => c.estado === 'obtenido').length
@@ -272,7 +307,13 @@ export default function MisCromosPage() {
 
       {/* CTA */}
       <div className="text-center mt-12 space-y-4">
-        <Link href="/catalogo" className="btn-primary">
+        <button
+          onClick={() => setModalOpen(true)}
+          className="btn-primary"
+        >
+          + Registrar Cromo
+        </button>
+        <Link href="/catalogo" className="btn-ghost block">
           Ir al catálogo
           <span>→</span>
         </Link>
@@ -282,6 +323,70 @@ export default function MisCromosPage() {
           </Link>
         </div>
       </div>
+
+      {/* Modal Registrar Cromo */}
+      {modalOpen && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="glass-card max-w-sm w-full animate-scale-in">
+            <div className="p-6">
+              <h2 className="text-2xl font-bold mb-6 text-white">Registrar Cromo</h2>
+
+              <div className="space-y-4">
+                {/* Número Cromo */}
+                <div>
+                  <label className="block text-sm font-semibold text-white/80 mb-2">
+                    Número de Cromo (1-980)
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="980"
+                    value={cromoInput}
+                    onChange={(e) => setCromoInput(e.target.value)}
+                    placeholder="Ej: 123"
+                    className="input-premium w-full"
+                    disabled={registering}
+                  />
+                </div>
+
+                {/* Estado */}
+                <div>
+                  <label className="block text-sm font-semibold text-white/80 mb-2">
+                    Estado
+                  </label>
+                  <select
+                    value={estadoInput}
+                    onChange={(e) => setEstadoInput(e.target.value as 'obtenido' | 'repetido')}
+                    className="input-premium w-full"
+                    disabled={registering}
+                  >
+                    <option value="obtenido">✅ Obtenido</option>
+                    <option value="repetido">🔄 Repetido</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={() => setModalOpen(false)}
+                  className="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300"
+                  disabled={registering}
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={registrarCromo}
+                  className="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-mundial-green to-mundial-cyan text-white shadow-glow-green transition-all duration-300 disabled:opacity-50"
+                  disabled={registering || !cromoInput}
+                >
+                  {registering ? 'Registrando...' : 'Registrar'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
